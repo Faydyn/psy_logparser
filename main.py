@@ -1,6 +1,11 @@
 from psyparser import Parser
 
-if __name__ == '__main__':
-    rootpath: str = './data_gonogo/'
+
+def main():
+    rootpath: str = './data/'
     parser: Parser = Parser()
     parser.read_in(path_rootdir=rootpath)
+
+
+if __name__ == '__main__':
+    main()
