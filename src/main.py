@@ -2,11 +2,11 @@ from parser import Parser
 
 
 def main():
-    rootpath = './data/'
-    savepath = './out/'
+    ROOTPATH = './data/'
+    SAVEPATH = './out/'
 
-    parser = Parser(path_rootdir=rootpath)
-    parser.run(path_savedir=savepath)
+    parser = Parser(path_rootdir=ROOTPATH)
+    parser.run(path_savedir=SAVEPATH)
 
 
 if __name__ == '__main__':

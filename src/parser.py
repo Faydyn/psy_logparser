@@ -10,6 +10,7 @@ class Parser:
         for root, _, file in os.walk(path_rootdir):
             self.filepaths = [os.path.join(root, f) for f in file if
                               f.endswith('.txt')]
+            self.filepaths.sort()
 
     # for debugging purposes
     def __str__(self):
@@ -20,8 +21,7 @@ class Parser:
         for filepath in self.filepaths:
             file_lines = self.lines_filepath(filepath)
             tokens = Tokens(*file_lines)
-            print(tokens)
-            break  # TODO: DEBUG BREAK POINT
+            tokens.transform_df()
 
     # reads in all lines of a file for a given path to a list
     def lines_filepath(self, filepath):
@@ -30,6 +30,3 @@ class Parser:
             while line := f.readline():
                 lines.append(line.strip())
             return lines
-
-    def transform(self, file_lines):
-        return file_lines
