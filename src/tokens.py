@@ -1,10 +1,7 @@
-from dataclasses import dataclass
-
 import pandas as pd
 
 
 # Simulates the structure from the example
-@dataclass(repr=True, eq=True)
 class Tokens:
     def __init__(self, exp, category, vpn, *data):
         self.TRIAL, self.PICTURE, self.RT, self.RS = ['trl', 'pic', 'rt', 'rs']
@@ -27,7 +24,7 @@ class Tokens:
             self.emo_gn[EMO[emo0]] = GONO[gn0]
             self.emo_gn[EMO[emo1]] = GONO[gn1]
 
-            return f'{GONO[gn0]}_{EMO[emo0]}_{GONO[gn1]}_{EMO[emo1]} '
+            return f'{GONO[gn0]}_{EMO[emo0]}_{GONO[gn1]}_{EMO[emo1]}'
 
         # transforms the lines into a proper Pandas DataFrame
         def file_lines_to_df(file_lines):
@@ -52,7 +49,6 @@ class Tokens:
     def transform_pic(self):
         # MAGIC CONSTANT (SEE EXAMPLE TAB6)
         EMO = {'nes': 'neu', 'has': 'hap', 'afs': 'fea', 'ans': 'ans'}
-
         # TODO: ans(ANGER???) IS NOT DEFINED BY CONVENTION (shortcut for it)
         def clean_transf(cell):
             stripped = cell[8:-4].lower()  # clean: Set_T\GAF14NES.jpg -> f14nes

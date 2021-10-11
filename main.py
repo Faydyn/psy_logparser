@@ -1,9 +1,9 @@
-from parser import Parser
+from src.parser import Parser
 
 
 def main():
-    ROOTPATH = './data/'
-    SAVEPATH = './out/'
+    ROOTPATH = './data'
+    SAVEPATH = './out'
 
     parser = Parser(path_rootdir=ROOTPATH)
     parser.run(path_savedir=SAVEPATH)
