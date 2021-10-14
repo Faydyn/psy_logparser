@@ -4,7 +4,7 @@ from src.tokens import Tokens
 
 
 class Parser:
-    # filters for .txt, saves RELATIVE path to root given
+    # filters for .txt, saves path to root given
     def __init__(self, path_datadir='data'):
         self.root = os.path.abspath('.')
         for root, _, file in os.walk(os.path.join(self.root, path_datadir)):
@@ -20,7 +20,6 @@ class Parser:
 
             tokens = Tokens(*file_lines)
             tokens.transform()
-            print(tokens)
             tokens.save_as_csv(savedir)
 
     # reads in all lines of a file for a given path to a list

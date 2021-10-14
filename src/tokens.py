@@ -1,28 +1,34 @@
 import os
 
+import numpy as np
 import pandas as pd
 
 
 # used Shortcuts: gn - Go/NoGo || emo - Emotion
 # Simulates the structure from the example
 class Tokens:
-    # Static Variables / MAGIC CONSTANTS
+    # Static Variables / MAGIC CONSTANTS / Conventions from Example
     TRIAL, PICTURE, RT, RS = ['trl', 'pic', 'rt', 'rs']
-    GONO = {'TGT': 'go', 'NTGT': 'no'}  # S. TAB11
+    GO, NO = TARGET_GN = ['go', 'no']
+    GONO = dict(zip(['TGT', 'NTGT'], TARGET_GN))  # S. TAB11
     __TARGET_EMO = ['neu', 'hap', 'fea', 'ang']
     EMO = dict(zip(['NEUTRAL', 'HAPPY', 'AFRAID', 'ANGER'], __TARGET_EMO))
     EMO_SHORT = dict(zip(['nes', 'has', 'afs', 'ans'], __TARGET_EMO))  # S. TAB6
+    # Relevant for final conversion in save_as_csv()
+    SIG_DETECT_MODES = ['hi', 'mi', 'fa', 'cr', 'er', 'co', 'om']
+    BLOCK, ID = BLOCK_ID = ['block', 'id']
 
     def __init__(self, exp, category, vpn, *data):
         def get_value(token):  # removes the "keyword"
             return token.split(':')[1].strip()
 
-        self.gnemo_lst = []  # get filled in split_block()
-        self.emo_gn = {}  # gets filled in set_emo_gn()
+        self.gnemo_lst = []  # [gn0, emo0, gn1, emo1], filled in split_block()
+        self.emo_gn = {}  # filled in set_emo_gn()
         self.experiment = get_value(exp)
         self.id = get_value(vpn)
         self.block = get_value(category)
         self.df = data  # is List[str] in this state
+        self.final_df = 0  # filled in fill_final_df()
 
     # For debugging purposes
     def __str__(self):
@@ -37,21 +43,13 @@ id: {self.id}
         self.convert_block()
         self.set_emo_gn()
         self.preprocess_df()
-        self.transform_pic()
+        self.transform_picture_col()
+        self.create_final_df()
+        self.fill_final_df()
 
     def save_as_csv(self, savedir):
-        SIG_DETECT_MODES = ['hi', 'mi', 'fa', 'cr', 'er', 'co', 'om']
-        BLOCK, ID = BLOCK_ID = ['block', 'id']
-
-        # ORDER MATTERS HERE
-        final_colnames = BLOCK_ID + [f'{self.block}_{mode}_{r}' for mode in SIG_DETECT_MODES for r in [self.RT, self.RS]]
-
-        final_df = pd.DataFrame(columns=final_colnames)
-        final_df[BLOCK] = self.block
-        final_df[ID] = self.id
-        print(final_df)
-
-        final_df.to_csv(os.path.join(savedir, f'{self.block}{self.id}.csv'))
+        self.final_df.to_csv(
+            os.path.join(savedir, f'{self.block}{self.id}.csv'), index=False)
 
     # PRIVATE FUNCTIONS #################################################
     # needed for next 2 steps (convert_block and set_emotions)
@@ -86,7 +84,7 @@ id: {self.id}
         self.df[self.RT] = pd.to_numeric(self.df[self.RT])
         self.df[self.RS] = pd.to_numeric(self.df[self.RS])
 
-    def transform_pic(self):
+    def transform_picture_col(self):
         def clean_transform(cell):
             stripped = cell[8:-4].lower()  # clean: Set_T\GAF14NES.jpg -> f14nes
             sex, *num = stripped[:3]  # first three chars
@@ -97,3 +95,32 @@ id: {self.id}
             return f'{sex}_{"".join(num)}_{emo}_{gn}'
 
         self.df[self.PICTURE] = self.df[self.PICTURE].apply(clean_transform)
+
+    def create_final_df(self):
+        # ORDER MATTERS HERE
+        final_colnames = [f'{self.block}_{mode}_{r}' for mode in
+                          self.SIG_DETECT_MODES
+                          for r in [self.RT, self.RS]]
+        all_colnames = self.BLOCK_ID + final_colnames
+        self.final_df = pd.DataFrame(np.zeros((1, 16), dtype=np.int32),
+                                     columns=all_colnames)
+
+    def fill_final_df(self):
+        # first fills are trivial
+        self.final_df[self.BLOCK] = self.block
+        self.final_df[self.ID] = self.id
+
+        # we go 2 bool funcs to check: lambda x: 1. x.endswith('go'), 2. x == 0
+        # can make dict for [hi,fa,mi,cr] with [(TF),(FF),(TT),(FT)]
+        # carthesian product with [rt,rs] (is in calculation and result)
+        # ORDER MATTERS
+        results = [(True, False), (False, False), (True, True), (False, True)]
+        check_results = dict(zip(range(4), results))
+        # TODO: MAGIC CONSTANT (i > 3 is always 0) ?
+        for i, sig in enumerate(self.SIG_DETECT_MODES[:4]):
+            is_go, is_zero = check_results[i]
+            end = 'go' if is_go else 'no'
+            for r in [self.RT, self.RS]:
+                tmp_df = self.df[self.df[self.PICTURE].str.endswith(end)]
+                tmp_df = tmp_df[tmp_df[r] == 0 if is_zero else tmp_df[r] > 0]
+                self.final_df[f'{self.block}_{sig}_{r}'] = sum(tmp_df[r])
