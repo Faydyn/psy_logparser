@@ -8,15 +8,19 @@ import pandas as pd
 # Simulates the structure from the example
 class Tokens:
     # Static Variables / MAGIC CONSTANTS / Conventions from Example
+    BLOCK, ID = BLOCK_ID = ['block', 'id']
     TRIAL, PICTURE, RT, RS = ['trl', 'pic', 'rt', 'rs']
     GO, NO = TARGET_GN = ['go', 'no']
     GONO = dict(zip(['TGT', 'NTGT'], TARGET_GN))  # S. TAB11
     __TARGET_EMO = ['neu', 'hap', 'fea', 'ang']
     EMO = dict(zip(['NEUTRAL', 'HAPPY', 'AFRAID', 'ANGER'], __TARGET_EMO))
     EMO_SHORT = dict(zip(['nes', 'has', 'afs', 'ans'], __TARGET_EMO))  # S. TAB6
-    # Relevant for final conversion in save_as_csv()
     SIG_DETECT_MODES = ['hi', 'mi', 'fa', 'cr', 'er', 'co', 'om']
-    BLOCK, ID = BLOCK_ID = ['block', 'id']
+    AMOUNT_CALC_MODES = 4
+    __CHECK_RESULTS = [(True, False), (False, False), (True, True), (False, True)]
+    SIG_CHECKS = dict(zip(range(4), __CHECK_RESULTS))
+    # 2 bool funcs to check - lambda x: 1. x.endswith('go'), 2. x == 0
+    # can make dict for [hi,fa,mi,cr] with [(TF),(FF),(TT),(FT)]
 
     def __init__(self, exp, category, vpn, *data):
         def get_value(token):  # removes the "keyword"
@@ -106,21 +110,19 @@ id: {self.id}
                                      columns=all_colnames)
 
     def fill_final_df(self):
-        # first fills are trivial
         self.final_df[self.BLOCK] = self.block
         self.final_df[self.ID] = self.id
 
-        # we go 2 bool funcs to check: lambda x: 1. x.endswith('go'), 2. x == 0
-        # can make dict for [hi,fa,mi,cr] with [(TF),(FF),(TT),(FT)]
-        # carthesian product with [rt,rs] (is in calculation and result)
-        # ORDER MATTERS
-        results = [(True, False), (False, False), (True, True), (False, True)]
-        check_results = dict(zip(range(4), results))
-        # TODO: MAGIC CONSTANT (i > 3 is always 0) ?
-        for i, sig in enumerate(self.SIG_DETECT_MODES[:4]):
-            is_go, is_zero = check_results[i]
+        for i, sig in enumerate(self.SIG_DETECT_MODES[:self.AMOUNT_CALC_MODES]):
+            is_go, is_zero = self.SIG_CHECKS[i]  # get check results
             end = 'go' if is_go else 'no'
+            gn_filter = self.df[self.df[self.PICTURE].str.endswith(end)]
             for r in [self.RT, self.RS]:
-                tmp_df = self.df[self.df[self.PICTURE].str.endswith(end)]
-                tmp_df = tmp_df[tmp_df[r] == 0 if is_zero else tmp_df[r] > 0]
-                self.final_df[f'{self.block}_{sig}_{r}'] = sum(tmp_df[r])
+                # get the filtered data and sum it up / count it
+                tmp_df = gn_filter[gn_filter[r] == 0 if is_zero else gn_filter[r] > 0]
+                # TODO: WHAT if >0 or ==0, count or sum?
+                self.final_df[f'{self.block}_{sig}_{r}'] = max(sum(tmp_df[r]),len(tmp_df))
+                # max(sum,len) solves problem of summing 0's to 0 => len >= sum
+                # There arent mixed 0 and non-0: If everything is not zero
+                # (i. e. >= 1, since no floats) => sum >= len
+
