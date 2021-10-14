@@ -1,6 +1,7 @@
-/data
-/examples
+/data/*
+/examples/cpp
+/examples/matlab
 .DS_Store
 *.idea
 /.idea
-/out
+/out/*
