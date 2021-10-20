@@ -1,6 +1,5 @@
 /data
-/examples/cpp
-/examples/matlab
+/examples
 .DS_Store
 *.idea
 /.idea
