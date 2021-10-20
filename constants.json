@@ -1,0 +1,145 @@
+{
+    "default" : {
+        "DATA_PATH" : "/Users/nilsseitz/Coding/PycharmProjects/psy_logparser/data",
+        "SAVE_PATH" : "/Users/nilsseitz/Coding/PycharmProjects/psy_logparser/out",
+        "FILETYPE_IN" : "txt",
+        "FILETYPE_OUT" : "csv",
+        "FILENAME_ACCUM_DATA" : "accum_data",
+
+        "OLD_EMO" : ["NEUTRAL", "HAPPY", "AFRAID", "ANGER"],
+        "OLD_EMO_SHORT" : ["nes", "has", "afs", "ans"],
+        "OLD_GONO" : ["TGT", "NTGT"],
+
+        "TARGET_BLOCK" : "block",
+        "TARGET_ID" : "id",
+        "TARGET_TRIAL" : "trl",
+        "TARGET_PICTURE" : "pic",
+        "TARGET_RT" : "rt",
+        "TARGET_RS" : "rs",
+        "TARGET_COLNAMES" : ["trl", "pic", "rt", "rs"],
+        "TARGET_EMO" : ["neu", "hap", "fea", "ang"],
+        "TARGET_GONO" : ["go", "no"],
+        "TARGET_PICTURENAME_REMOVE_FIRST" : 8,
+        "TARGET_PICTURENAME_REMOVE_LAST" : 4,
+        "TARGET_PICTURENAME_SPLIT_SEXNUM_AFTER" : 3,
+
+        "OLD_EMO_TO_TARGET" : {
+            "NEUTRAL" : "neu",
+            "HAPPY" : "hap",
+            "AFRAID" : "fea",
+            "ANGER" : "ang"
+        },
+        "OLD_EMO_SHORT_TO_TARGET" : {
+            "nes" : "neu",
+            "has" : "hap",
+            "afs" : "fea",
+            "ans" : "ang"
+        },
+        "OLD_GONO_TO_TARGET" : {
+            "TGT" : "go",
+            "NTGT" : "no"
+        },
+
+        "SIG_COLNAMES" : ["hi", "mi", "fa", "cr"],
+        "NONSIG_COLNAMES" : ["om", "co"],
+        "NONSIG_COMBINED" : "er",
+        "FINAL_COLNAMES" : ["hi", "mi", "fa", "cr", "er", "co", "om"],
+        "SIGNAL_TO_GONO" : {
+            "hi" : "go",
+            "mi" : "go",
+            "fa" : "no",
+            "cr" : "no"
+        },
+        "SIGNAL_TO_RS_VALUE" : {
+            "hi" : 1,
+            "mi" : 0,
+            "fa" : 1,
+            "cr" : 0
+        },
+        "RTRS_COLUMN_TO_FUNCTION" : {
+            "rt" : "MEAN",
+            "rs" : "COUNT"
+        },
+        "DECIMAL_PLACES" : 3,
+        "SIG_EQUIVALENT_NONSIG" : {
+            "mi" : "om",
+            "fa" : "co"
+        }
+    },
+
+    "preprocess" : {
+        "DATA_PATH" : "/Users/nilsseitz/Coding/PycharmProjects/psy_logparser/data",
+        "SAVE_PATH" : "/Users/nilsseitz/Coding/PycharmProjects/psy_logparser/out",
+        "FILETYPE_IN" : "txt",
+        "FILETYPE_OUT" : "csv",
+
+        "OLD_EMO" : ["NEUTRAL", "HAPPY", "AFRAID", "ANGER"],
+        "OLD_EMO_SHORT" : ["nes", "has", "afs", "ans"],
+        "OLD_GONO" : ["TGT", "NTGT"],
+
+        "TARGET_BLOCK" : "block",
+        "TARGET_ID" : "id",
+        "TARGET_TRIAL" : "trl",
+        "TARGET_PICTURE" : "pic",
+        "TARGET_RT" : "rt",
+        "TARGET_RS" : "rs",
+        "TARGET_COLNAMES" : ["trl", "pic", "rt", "rs"],
+        "TARGET_EMO" : ["neu", "hap", "fea", "ang"],
+        "TARGET_GONO" : ["go", "no"],
+        "TARGET_PICTURENAME_REMOVE_FIRST" : 8,
+        "TARGET_PICTURENAME_REMOVE_LAST" : 4,
+        "TARGET_PICTURENAME_SPLIT_SEXNUM_AFTER" : 3,
+
+        "OLD_EMO_TO_TARGET" : {
+            "NEUTRAL" : "neu",
+            "HAPPY" : "hap",
+            "AFRAID" : "fea",
+            "ANGER" : "ang"
+        },
+        "OLD_EMO_SHORT_TO_TARGET" : {
+            "nes" : "neu",
+            "has" : "hap",
+            "afs" : "fea",
+            "ans" : "ang"
+        },
+        "OLD_GONO_TO_TARGET" : {
+            "TGT" : "go",
+            "NTGT" : "no"
+        },
+
+        "SIG_COLNAMES" : ["hi", "mi", "fa", "cr"],
+        "NONSIG_COLNAMES" : ["om", "co"],
+        "NONSIG_COMBINED" : "er",
+        "FINAL_COLNAMES" : ["hi", "mi", "fa", "cr", "er", "co", "om"],
+        "SIGNAL_TO_GONO" : {
+            "hi" : "go",
+            "mi" : "go",
+            "fa" : "no",
+            "cr" : "no"
+        },
+        "SIGNAL_TO_RS_VALUE" : {
+            "hi" : 1,
+            "mi" : 0,
+            "fa" : 1,
+            "cr" : 0
+        },
+        "RTRS_COLUMN_TO_FUNCTION" : {
+            "rt" : "MEAN",
+            "rs" : "COUNT"
+        },
+        "DECIMAL_PLACES" : 3,
+        "SIG_EQUIVALENT_NONSIG" : {
+            "mi" : "om",
+            "fa" : "co"
+        }
+    },
+
+    "accumulate" : {
+        "DATA_PATH" : "/Users/nilsseitz/Coding/PycharmProjects/psy_logparser/out",
+        "SAVE_PATH" : "/Users/nilsseitz/Coding/PycharmProjects/psy_logparser/out",
+        "FILETYPE_IN" : "csv",
+        "FILETYPE_OUT" : "csv",
+        "FILENAME_ACCUM_DATA" : "accum_data",
+        "DECIMAL_PLACES" : 3
+    }
+}
