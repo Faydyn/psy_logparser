@@ -3,36 +3,22 @@ import os
 import numpy as np
 import pandas as pd
 
+from src.constants import ARGS as CONST
 
-# used Shortcuts: gn - Go/NoGo || emo - Emotion
-# Simulates the structure from the example
+
 class Tokens:
-    # Static Variables / MAGIC CONSTANTS / Conventions from Example
-    BLOCK, ID = BLOCK_ID = ['block', 'id']
-    TRIAL, PICTURE, RT, RS = ['trl', 'pic', 'rt', 'rs']
-    GO, NO = TARGET_GN = ['go', 'no']
-    GONO = dict(zip(['TGT', 'NTGT'], TARGET_GN))  # S. TAB11
-    __TARGET_EMO = ['neu', 'hap', 'fea', 'ang']
-    EMO = dict(zip(['NEUTRAL', 'HAPPY', 'AFRAID', 'ANGER'], __TARGET_EMO))
-    EMO_SHORT = dict(zip(['nes', 'has', 'afs', 'ans'], __TARGET_EMO))  # S. TAB6
-    SIG_DETECT_MODES = ['hi', 'mi', 'fa', 'cr', 'er', 'co', 'om']
-    AMOUNT_CALC_MODES = 4
-    __CHECK_RESULTS = [(True, False), (False, False), (True, True), (False, True)]
-    SIG_CHECKS = dict(zip(range(4), __CHECK_RESULTS))
-    # 2 bool funcs to check - lambda x: 1. x.endswith('go'), 2. x == 0
-    # can make dict for [hi,fa,mi,cr] with [(TF),(FF),(TT),(FT)]
-
     def __init__(self, exp, category, vpn, *data):
         def get_value(token):  # removes the "keyword"
-            return token.split(':')[1].strip()
+            _, value = token.split(':')
+            return value.strip()
 
-        self.gnemo_lst = []  # [gn0, emo0, gn1, emo1], filled in split_block()
-        self.emo_gn = {}  # filled in set_emo_gn()
+        self.gono_emo_combi_block = {}  # Dict of Order GoNo/Emo in Block
+        self.emo_to_gono_block = {}
         self.experiment = get_value(exp)
         self.id = get_value(vpn)
         self.block = get_value(category)
         self.df = data  # is List[str] in this state
-        self.final_df = 0  # filled in fill_final_df()
+        self.final_df = pd.DataFrame()
 
     # For debugging purposes
     def __str__(self):
@@ -45,84 +31,109 @@ id: {self.id}
     def transform(self):
         self.split_block()
         self.convert_block()
-        self.set_emo_gn()
+        self.set_emo_to_gn()
         self.preprocess_df()
         self.transform_picture_col()
         self.create_final_df()
         self.fill_final_df()
 
     def save_as_csv(self, savedir):
-        self.final_df.to_csv(
-            os.path.join(savedir, f'{self.block}{self.id}.csv'), index=False)
+        filename = f'{self.block}{self.id}.{CONST.FILETYPE_OUT}'
+        full_savepath = os.path.join(savedir, filename)
+
+        self.final_df = self.final_df.fillna(0)
+        self.final_df.to_csv(full_savepath,
+                             index=False,
+                             float_format=f'%.{CONST.DECIMAL_PLACES}f')
 
     # PRIVATE FUNCTIONS #################################################
-    # needed for next 2 steps (convert_block and set_emotions)
-    def split_block(self):  # splits data to gnemo_lst
-        # "TGT NEUTRAL, NTGT HAPPY"
-        nested_list = [x.strip().split(' ') for x in self.block.split(', ')]
-        self.gnemo_lst = [x for sublist in nested_list for x in sublist]
-        # [gn0, emo0, gn1, emo1] (needed for convert_block() and set_emo_gn())
+    def set_gono_emo_combi_block(self, values):
+        self.gono_emo_combi_block = dict(zip(CONST.KEYS_BLOCK, values))
+
+    def split_block(self):  # INPUT: "TGT NEUTRAL, NTGT HAPPY"
+        gono_emo_pairs = [x.strip().split(' ') for x in self.block.split(', ')]
+        gono_emo_combi = [x for gono_emo in gono_emo_pairs for x in gono_emo]
+        self.set_gono_emo_combi_block(values=gono_emo_combi)
+        # OUTPUT: { gn0 : "TGT", .. , emo1 : "HAPPY" }
 
     def convert_block(self):
-        # -> "go_neu_no_hap"
-        gn0, emo0, gn1, emo1 = self.gnemo_lst
-        self.block = f'{self.GONO[gn0]}_{self.EMO[emo0]}_{self.GONO[gn1]}_{self.EMO[emo1]}'
+        block_data = []
+        for KEY, gono_or_emo in zip(CONST.KEYS_BLOCK, CONST.MATCH_DICT_FOR_KEY):
+            gono_or_emo_block = self.gono_emo_combi_block[KEY]
+            converted_gono_or_emo_block = gono_or_emo[gono_or_emo_block]
+            block_data.append(converted_gono_or_emo_block)
 
-    def set_emo_gn(self):
-        # Sets Emotion to Go/NoGo, because its needed for transform_pic()
-        def set_dict_emo_gn(emo, gn):
-            self.emo_gn[self.EMO[emo]] = self.GONO[gn]
+        self.set_gono_emo_combi_block(values=block_data)  # update w/ new terms
+        self.block = '_'.join(block_data)  # OUTPUT: "go_neu_no_hap"
 
-        gn0, emo0, gn1, emo1 = self.gnemo_lst
-        set_dict_emo_gn(emo0, gn0)
-        set_dict_emo_gn(emo1, gn1)
+    def set_emo_to_gn(self):
+        def set_dict_emo_to_gono_block(emo, gono):
+            emo_block = self.gono_emo_combi_block[emo]
+            gono_block = self.gono_emo_combi_block[gono]
+            self.emo_to_gono_block[emo_block] = gono_block
+
+        set_dict_emo_to_gono_block(CONST.EMO_0, CONST.GONO_0)
+        set_dict_emo_to_gono_block(CONST.EMO_1, CONST.GONO_1)
 
     # transforms the lines into a proper Pandas DataFrame
     def preprocess_df(self):
-        sep_lines = [line.split('\t') for line in self.df]  # Tabs
-        # make the format right with col_name and set_index
-        col_names = [self.TRIAL, self.PICTURE, self.RT, self.RS]
-        self.df = pd.DataFrame(sep_lines[1:], columns=col_names, dtype="string")
-        self.df = self.df.set_index(self.TRIAL)
-        # change types to int64 with numerics
-        self.df[self.RT] = pd.to_numeric(self.df[self.RT])
-        self.df[self.RS] = pd.to_numeric(self.df[self.RS])
+        data_matrix = [line.split('\t') for line in self.df]  # Tabs
+
+        #  Drop colnames and replace with constant and set_index to trial
+        self.df = pd.DataFrame(data_matrix[1:], columns=CONST.TARGET_COLNAMES)
+        self.df = self.df.set_index(CONST.TARGET_TRIAL)
+
+        # change types to int with numerics
+        self.df[CONST.TARGET_RT] = pd.to_numeric(self.df[CONST.TARGET_RT])
+        self.df[CONST.TARGET_RS] = pd.to_numeric(self.df[CONST.TARGET_RS])
 
     def transform_picture_col(self):
         def clean_transform(cell):
-            stripped = cell[8:-4].lower()  # clean: Set_T\GAF14NES.jpg -> f14nes
-            sex, *num = stripped[:3]  # first three chars
-            emotion = stripped[3:]  # other chars than first 3
-            emo = self.EMO_SHORT[emotion]
-            # gets go/no for the given emotion for this token (from block)
-            gn = self.emo_gn[emo]
-            return f'{sex}_{"".join(num)}_{emo}_{gn}'
+            # Clean: Set_T\GAF14NES.jpg -> f14nes
+            stripped = cell[CONST.TARGET_PICTURENAME_REMOVE_FIRST:
+                       -CONST.TARGET_PICTURENAME_REMOVE_LAST].lower()
+            # first three chars
+            sex, *num = stripped[:CONST.TARGET_PICTURENAME_SPLIT_SEXNUM_AFTER]
+            # other chars than first 3
+            emo = stripped[CONST.TARGET_PICTURENAME_SPLIT_SEXNUM_AFTER:]
+            target_emo = CONST.OLD_EMO_SHORT_TO_TARGET[emo]
+            # gets GoNo for the given emotion for this token block
+            gono = self.emo_to_gono_block[target_emo]
+            return f'{sex}_{"".join(num)}_{emo}_{gono}'
 
-        self.df[self.PICTURE] = self.df[self.PICTURE].apply(clean_transform)
+        self.df[CONST.TARGET_PICTURE] = self.df[CONST.TARGET_PICTURE].apply(clean_transform)
 
     def create_final_df(self):
-        # ORDER MATTERS HERE
-        final_colnames = [f'{self.block}_{mode}_{r}' for mode in
-                          self.SIG_DETECT_MODES
-                          for r in [self.RT, self.RS]]
-        all_colnames = self.BLOCK_ID + final_colnames
-        self.final_df = pd.DataFrame(np.zeros((1, 16), dtype=np.int32),
-                                     columns=all_colnames)
+        final_colnames = [f'{self.block}_{mode}_{r}'
+                          for mode in CONST.FINAL_COLNAMES for r in CONST.RT_RS]
+        all_colnames = CONST.BLOCK_ID + final_colnames
+        self.final_df = pd.DataFrame(np.zeros((1, 16)), columns=all_colnames)
 
     def fill_final_df(self):
-        self.final_df[self.BLOCK] = self.block
-        self.final_df[self.ID] = self.id
+        def set_value_final_df(sig_name):
+            colname_rt = f'{self.block}_{sig_name}_{CONST.TARGET_RT}'
+            colname_rs = f'{self.block}_{sig_name}_{CONST.TARGET_RS}'
 
-        for i, sig in enumerate(self.SIG_DETECT_MODES[:self.AMOUNT_CALC_MODES]):
-            is_go, is_zero = self.SIG_CHECKS[i]  # get check results
-            end = 'go' if is_go else 'no'
-            gn_filter = self.df[self.df[self.PICTURE].str.endswith(end)]
-            for r in [self.RT, self.RS]:
-                # get the filtered data and sum it up / count it
-                tmp_df = gn_filter[gn_filter[r] == 0 if is_zero else gn_filter[r] > 0]
-                # TODO: WHAT if >0 or ==0, count or sum?
-                self.final_df[f'{self.block}_{sig}_{r}'] = max(sum(tmp_df[r]),len(tmp_df))
-                # max(sum,len) solves problem of summing 0's to 0 => len >= sum
-                # There arent mixed 0 and non-0: If everything is not zero
-                # (i. e. >= 1, since no floats) => sum >= len
+            self.final_df[colname_rt] = filter_df[CONST.TARGET_RT].mean()
+            self.final_df[colname_rs] = float(len(filter_df[CONST.TARGET_RS]))
+
+        self.final_df[CONST.TARGET_BLOCK] = self.block
+        self.final_df[CONST.TARGET_ID] = self.id
+
+        for sig in CONST.SIG_COLNAMES:
+            filter_df = self.df[  # Filters for Go/No
+                self.df[CONST.TARGET_PICTURE].str.endswith(CONST.SIGNAL_TO_GONO[sig])]
+            filter_df = filter_df[  # Filters for 0/1 == RS
+                filter_df[CONST.TARGET_RS] == CONST.SIGNAL_TO_RS_VALUE[sig]]
+            set_value_final_df(sig_name=sig)
+
+            if (nonsig := CONST.SIG_EQUIVALENT_NONSIG.get(sig)):  # om = mi, co = fa
+                set_value_final_df(sig_name=nonsig)
+
+        for nonsig in CONST.NONSIG_COLNAMES:  # calculate er = om + co
+            for r in CONST.RT_RS:
+                combined_colname = f'{self.block}_{CONST.NONSIG_COMBINED}_{r}'
+                nonsig_colname = f'{self.block}_{nonsig}_{r}'
+                self.final_df[combined_colname] += self.final_df[nonsig_colname]
+
 

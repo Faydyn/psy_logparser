@@ -1,9 +1,9 @@
 from src.parser import Parser
 
-# TODO: REMOVE EXAMPLE FROM DATA
+
 def main():
-    parser = Parser()
-    parser.run()
+    parser = Parser()  # Path is an optional argument (datapath)
+    parser.run()  # Path is an optional argument (savepath)
 
 
 if __name__ == '__main__':
