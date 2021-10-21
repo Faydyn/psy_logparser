@@ -86,7 +86,7 @@ Choose a directory inside a __Terminal__ (with `cd`, see below) and type `git cl
 
 ###### Using Command-Line to install dependencies
 
-1. Open up __Command Prompt__,__PowerShell__ or a __Terminal__ (Unix) of your choice.
+1. Open up __Command Prompt__, __PowerShell__ or a __Terminal__ (Unix) of your choice.
 2. Copy/Type the path of the downloaded/cloned repository (this is `<PATH>`) to the Prompt/Shell: `cd <PATH>\psy_logparser`.
 3. Type `pip install -r requirements.txt` and `pip3 install -r requirements.txt`, but the latter should suffice in most cases.
 ![Changing Directory in Terminal](img/terminal_cd_done.png)
@@ -104,6 +104,7 @@ Choose a directory inside a __Terminal__ (with `cd`, see below) and type `git cl
 
 ### main
 - __main.py__: <br>Entry point of the program and later run on command line for __Option 2__. It creates a Parser and runs it.
+- __parser.ipynb__: <br>Jupyter notebook, that acts as main file and displays the final result. (Only visible in Option 2)
 
 ### constants
 - __constants.json__: <br>Constants are defined here. The program load them while running. There are different modes configured.<br>
@@ -117,6 +118,11 @@ __Change mode as necessary.__ Change path if you moved __constants.json__.
 
 ### setup
 - __requirements.txt__: <br>Used for setup with __pip__ to guarantee the correct version of __numpy__ and __pandas__. 
+
+### other
+- __README.md__: The documents that is displayed on [Github](https://github.com/Faydyn/psy_logparser/tree/master).
+- __img__: Contains images for README.
+- __LICENSE__: Law stuff.
 
 <br>
 <br>
@@ -145,14 +151,14 @@ I tried to give self-explanatory names for these constants. If in doubt, don't c
 5. Open __constants.py__ (in __src__).
 6. Change __MODE__. (Spell correctly) 
    1. __preprocess__: <br>Converts data to a __csv__ for each file.
-   2. __accumulate__: <br>Accumulates to __csv__ files from above to one big __csv__. 
+   2. __accumulate__: <br>Accumulates __csv__ files from above to one big __csv__. 
    3. __default__: <br>Combines both, __preprocess__ and __accumulate__, and does some optimization.
 7. Change __JSON_FILEPATH__. (Double backslashes!)<br> (Only, if you moved that file or want to use another config)
 
 <br>
 
 #### RUN PROGRAM
-1. Open up __Command Prompt__,__PowerShell__ or a __Terminal__ (Unix) of your choice.
+1. Open up __Command Prompt__, __PowerShell__ or a __Terminal__ (Unix) of your choice.
 2. Copy/Type the path of the downloaded/cloned repository (this is `<PATH>`) to the Prompt/Shell: `cd <PATH>\psy_logparser`.
 3. Type `python -m main`
 4. Your results should now be in the specified path.

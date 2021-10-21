@@ -1,3 +1,5 @@
+# Copyright © 2021 Nils Seitz, Prof. Dr. Alexander Lischke
+
 from src.parser import Parser
 
 

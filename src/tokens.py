@@ -1,3 +1,6 @@
+# Copyright © 2021 Nils Seitz, Prof. Dr. Alexander Lischke
+
+
 import os
 
 import numpy as np

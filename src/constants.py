@@ -1,3 +1,4 @@
+# Copyright © 2021 Nils Seitz, Prof. Dr. Alexander Lischke
 import json
 import os
 
