@@ -6,6 +6,7 @@ Parses data from .txt-Files to a certain format and saves them as .csv-Files.
 
 Has multiple parts that can be chosen individually or chained together to produce a final, accumulated result.
 
+<br>
 
 ## What do you need to use the parser?
 
@@ -16,7 +17,6 @@ __DISCLAIMER__: This option is more __restricted__ when it comes to customizatio
 Open this [Jupyter Notebook on Binder](https://mybinder.org/v2/gh/Faydyn/psy_logparser.git/master).
 
 <br>
-_____________
 <br>
 
 ### Option 2: Python 3 (Local)
@@ -39,7 +39,7 @@ If you already installed __Python 3.9.7__ or higher, you can [skip](https://gith
 5. Wait for installation to complete.
 6. When done, __Disable Path Length Limit__. (If not already done - thus does not show up in picture).
 ![Finished Python 3 Install Windows](img/py_install_done_win.png)
-7. Close the Installer and remove `python-3.9.7.exe`. 
+7. Close the Installer and remove __python-3.9.7.exe__. 
 
 ###### Testing Python 3
 1. Press __Win+S__ to search for "__cmd__", choose __Command Prompt__ (or PowerShell).
@@ -51,16 +51,17 @@ If you already installed __Python 3.9.7__ or higher, you can [skip](https://gith
 
 <br>
 
-##### 1.2 __OS X__
+
+
+##### 1.3 __MacOSX__
 Download Anaconda via Homebrew and simply set up an Environment with Python 3.9.7.
 
 You might need to use `python3` in __Terminal__.
 Contact me, when issues arise during this. 
 
-<br>
-
 ##### 1.3 __Linux__
 I guess, you know how to do this.
+
 
 <br>
 <br>
@@ -87,15 +88,26 @@ Choose a directory inside a __Terminal__ (with `cd`, see below) and type `git cl
 
 1. Open up __Command Prompt__,__PowerShell__ or a __Terminal__ (Unix) of your choice.
 2. Copy/Type the path of the downloaded/cloned repository (this is `<PATH>`) to the Prompt/Shell: `cd <PATH>\psy_logparser`.
-
-![Changing Directory in Terminal](img/terminal_cd_done.png)
 3. Type `pip install -r requirements.txt` and `pip3 install -r requirements.txt`, but the latter should suffice in most cases.
+![Changing Directory in Terminal](img/terminal_cd_done.png)
+
 
 ###### Testing dependencies
 
 1. Type `python -c "import numpy; print(numpy.__version__)"`. That should be: `1.21.2`. 
 2. Type `python -c "import pandas; print(pandas.__version__)"`. That should be: `1.3.2`. 
 
+<br>
+
+## Quick Description of each File
+
+
+## How to use the parser?
+
+
+### Option 1: Jupyter Notebook (Browser)
+
+### Option 2: Python 3 (Local)
 
 Open constants.json and change path for data in and out
 IMPORTANT USE DOUBLE \\ INSTEAD OF SINGLE \ AS SEPARATOR FOR DIRECTORIES in constants.json
