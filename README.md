@@ -1,5 +1,6 @@
 # psy_logparser
-###### by [Nils Seitz](https://github.com/Faydyn)
+###### Copyright © 2021 [Nils Seitz](https://github.com/Faydyn), [Prof. Dr. Alexander Lischke](https://www.researchgate.net/profile/Alexander-Lischke)
+
 
 <br>
 Parses from .txt-Files to a certain format, cleans, processes and saves the data.
@@ -86,7 +87,7 @@ Choose a directory inside a __Terminal__ (with `cd`, see below) and type `git cl
 
 ###### Using Command-Line to install dependencies
 
-1. Open up __Command Prompt__, __PowerShell__ or a __Terminal__ (Unix) of your choice.
+1. Open __Command Prompt__, __PowerShell__ or a __Terminal__ (Unix) of your choice.
 2. Copy/Type the path of the downloaded/cloned repository (this is `<PATH>`) to the Prompt/Shell: `cd <PATH>\psy_logparser`.
 3. Type `pip install -r requirements.txt` and `pip3 install -r requirements.txt`, but the latter should suffice in most cases.
 ![Changing Directory in Terminal](img/terminal_cd_done.png)
