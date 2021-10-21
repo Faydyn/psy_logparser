@@ -1,6 +1,7 @@
 /data
 /examples
+/out
 .DS_Store
 *.idea
 /.idea
-/out
+**/__pycache__

@@ -51,9 +51,7 @@ If you already installed __Python 3.9.7__ or higher, you can [skip](https://gith
 
 <br>
 
-
-
-##### 1.3 __MacOSX__
+##### 1.2 __MacOSX__
 Download Anaconda via Homebrew and simply set up an Environment with Python 3.9.7.
 
 You might need to use `python3` in __Terminal__.
