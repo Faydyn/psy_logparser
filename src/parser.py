@@ -51,7 +51,7 @@ class Parser:
     def save_accumulated_df_as_csv(self, savepath):
         final_savepath = os.path.join(savepath, self.accum_filename)
 
-        self.accumulated_df = self.accumulated_df.fillna(0)
+        self.accumulated_df = self.accumulated_df.fillna(CONST.FILL_EMPTY_WITH)
         self.accumulated_df.to_csv(final_savepath,
                                    index=False,
                                    float_format=f'%.{CONST.DECIMAL_PLACES}f')

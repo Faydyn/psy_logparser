@@ -64,7 +64,8 @@
         "SIG_EQUIVALENT_NONSIG" : {
             "mi" : "om",
             "fa" : "co"
-        }
+        },
+        "FILL_EMPTY_WITH": 0.0
     },
 
     "preprocess" : {
@@ -129,8 +130,8 @@
         },
         "DECIMAL_PLACES" : 3,
         "SIG_EQUIVALENT_NONSIG" : {
-            "mi" : "om",
-            "fa" : "co"
+            "mi": "om",
+            "fa": "co"
         }
     },
 
@@ -140,6 +141,7 @@
         "FILETYPE_IN" : "csv",
         "FILETYPE_OUT" : "csv",
         "FILENAME_ACCUM_DATA" : "accum_data",
-        "DECIMAL_PLACES" : 3
+        "DECIMAL_PLACES" : 3,
+        "FILL_EMPTY_DATA_WITH": 0.0
     }
 }

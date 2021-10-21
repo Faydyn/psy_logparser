@@ -63,7 +63,7 @@ id: {self.id}
         filename = f'{self.block}{self.id}.{CONST.FILETYPE_OUT}'
         full_savepath = os.path.join(savedir, filename)
 
-        self.final_df = self.final_df.fillna(0)
+        self.final_df = self.final_df.fillna(CONST.FILL_EMPTY_WITH)
         self.final_df.to_csv(full_savepath,
                              index=False,
                              float_format=f'%.{CONST.DECIMAL_PLACES}f')
