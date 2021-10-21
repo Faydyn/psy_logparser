@@ -2,9 +2,11 @@
 ###### by [Nils Seitz](https://github.com/Faydyn)
 
 <br>
-Parses data from .txt-Files to a certain format and saves them as .csv-Files.
+Parses from .txt-Files to a certain format, cleans, processes and saves the data.
 
-Has multiple parts that can be chosen individually or chained together to produce a final, accumulated result.
+Parser has multiple parts, that can be chosen individually or chained together to produce a final, accumulated result.
+
+This program came to life to solve a parsing problem for Prof. Dr. Alexander Lischke.
 
 <br>
 
@@ -45,7 +47,7 @@ If you already installed __Python 3.9.7__ or higher, you can [skip](https://gith
 1. Press __Win+S__ to search for "__cmd__", choose __Command Prompt__ (or PowerShell).
 2. Inside __Command Prompt__ type: `python`. 
 3. Check, if it installed correctly and prints out the correct version number (__3.9.7__).
-4. Do another simple check, like `2 + 2`, which check result in `4` without any errors.
+4. Do another simple check, like `2 + 2`, which should result in 4 without any errors.
 5. Type `quit()` to exit Python.
 ![Python 3 Testing](img/py_check_done.png)
 
@@ -96,28 +98,73 @@ Choose a directory inside a __Terminal__ (with `cd`, see below) and type `git cl
 2. Type `python -c "import pandas; print(pandas.__version__)"`. That should be: `1.3.2`. 
 
 <br>
+<br>
 
-## Quick Description of each File
+## Quick Description of each file
 
+### main
+- __main.py__: <br>Entry point of the program and later run on command line for __Option 2__. It creates a Parser and runs it.
+
+### constants
+- __constants.json__: <br>Constants are defined here. The program load them while running. There are different modes configured.<br>
+__Change values as necessary.__
+- __src/constants.py__: <br>Contains the path to __constants.json__ and the mode - it then loads all defined constants for that mode.<br>
+__Change mode as necessary.__ Change path if you moved __constants.json__.
+
+### src
+- __src/parser.py__: <br>Does basic File-Path Handling and reads in and saves the (if wanted, accumulated) data.
+- __src/token.py__: <br>Heart of all Data Manipulation. Splits, converts, rearranges data as defined in __constants.json__.
+
+### setup
+- __requirements.txt__: <br>Used for setup with __pip__ to guarantee the correct version of __numpy__ and __pandas__. 
+
+<br>
+<br>
 
 ## How to use the parser?
 
-
 ### Option 1: Jupyter Notebook (Browser)
+1. Upload your data in a folder named __data__.
+2. Run all code cells of the Notebook.
+3. Download your results from __out__.
 
+<br><br>
 ### Option 2: Python 3 (Local)
+__DISCLAIMER__: On Windows, paths used inside __json__ and __py__ files have to use double backslashes (`\\`) to seperate directories.<br> 
+E.g.: `"DATA_PATH" : "C:\\Users\\nilsseitz\\Downloads\\data",`
 
-Open constants.json and change path for data in and out
-IMPORTANT USE DOUBLE \\ INSTEAD OF SINGLE \ AS SEPARATOR FOR DIRECTORIES in constants.json
-Save and Exit constants.json 
+<br>
 
-Go back to shell/prompt/terminal and type "python -m main"
+#### CONSTANTS
+I tried to give self-explanatory names for these constants. If in doubt, don't change them or ask me.
 
-IF You want to change to mode that is loaded in constants OR want to load an 
-entirely other constant file that is also json: 
-THIS CAN BE CHANGED WITH THE FIRST TWO VARIABLES OF constants.py (!PY!)
-BE Careful to spell the mode correctly. 
-IMPORTANT USE DOUBLE \\ INSTEAD OF SINGLE \ AS SEPARATOR FOR DIRECTORIES in constants.py
+1. Open __constants.json__.
+2. Change paths for __DATA_PATH__ and __SAVE_PATH__. (Double backslashes!)
+3. Change other values. (optional)
+4. Close __constants.json__.
+5. Open __constants.py__ (in __src__).
+6. Change __MODE__. (Spell correctly) 
+   1. __preprocess__: <br>Converts data to a __csv__ for each file.
+   2. __accumulate__: <br>Accumulates to __csv__ files from above to one big __csv__. 
+   3. __default__: <br>Combines both, __preprocess__ and __accumulate__, and does some optimization.
+7. Change __JSON_FILEPATH__. (Double backslashes!)<br> (Only, if you moved that file or want to use another config)
+
+<br>
+
+#### RUN PROGRAM
+1. Open up __Command Prompt__,__PowerShell__ or a __Terminal__ (Unix) of your choice.
+2. Copy/Type the path of the downloaded/cloned repository (this is `<PATH>`) to the Prompt/Shell: `cd <PATH>\psy_logparser`.
+3. Type `python -m main`
+4. Your results should now be in the specified path.
+
+<br>
+<br>
+
+## What else to know?
+
+- [Example json](https://codeblogmoney.com/what-is-json/)
+- [Git Windows](https://git-scm.com/download/win/)
+- [Jupyter Guide](https://medium.com/velotio-perspectives/the-ultimate-beginners-guide-to-jupyter-notebooks-6b00846ed2af)
 
 
 
