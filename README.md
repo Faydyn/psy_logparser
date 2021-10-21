@@ -1,16 +1,26 @@
 # psy_logparser
 
+Parses data from .txt-Files to a certain format and saves them as .csv-Files.
+
+Has multiple parts that can be chosen individually or chained together to produce a final, accumulated result.
+
 ## What do you need to use the parser?
 
-### Option 1: Python 3 (Local)
+### Option 1: Jupyter Notebook (Browser)
+
+Open this [Jupyter Notebook on Binder](https://mybinder.org/v2/gh/Faydyn/psy_logparser.git/master).
+
+__DISCLAIMER__: This option is more __restricted__ when it comes to customization.
+
+### Option 2: Python 3 (Local)
 The following is a quick guide of a Python Installation primarily for Windows, with some comments for Unix-based Operating Systems.
 
 If you already installed `Python 3.9.7` or higher, you can skip this part. 
 
 #### 1. Python Installation Guide 
 
-##### Windows
-__WARNING: `Python 3.9.7` cannot be used on Windows 7 or earlier.__
+##### __WINDOWS__
+__WARNING__: `Python 3.9.7` cannot be used on Windows 7 or earlier.
 
 ######  Download and run Python 3
 1. Download `Python 3.9.7` from the [Python Website](https://www.python.org/downloads/release/python-397/). Choose either __Windows installer (32-bit)__ or __Windows installer (64-bit, recommended)__.
@@ -28,24 +38,24 @@ __WARNING: `Python 3.9.7` cannot be used on Windows 7 or earlier.__
 4. Do another simple check, like `2 + 2`, which check result in `4` without any errors.
 5. Type `quit()` to exit Python.
 
-##### OS X
+##### __OS X__
 Download Anaconda via Homebrew and simply set up an Environment with Python 3.9.7.
 
 You might need to use `python3` in __Terminal__.
 Contact me, when issues arise during this. 
 
-##### Linux
+##### __LINUX__
 I guess, you know how to do this.
 
 
 #### 2. Github Guide 
 Now you need to download the files from this repository. They can be download as `zip`, or you can __clone__ them. 
 
-##### Download zip 
+##### __DOWNLOAD ZIP__
 Click the green "__Code__" at the top of this page and choose "__Download ZIP__".
 Move the files where you like - as long as you got the permissions to access the chosen directory.
 
-##### Clone Repository
+##### __GIT CLONE__ 
 Choose a directory inside a __Terminal__ (with `cd`, see below) and type `git clone https://github.com/Faydyn/psy_logparser.git`.
 
 
@@ -76,12 +86,6 @@ BE Careful to spell the mode correctly.
 IMPORTANT USE DOUBLE \\ INSTEAD OF SINGLE \ AS SEPARATOR FOR DIRECTORIES in constants.py
 
 
-### Option 2: Jupyter Notebook (Browser)
 
-Open this [Jupyter Notebook on Binder](https://mybinder.org/v2/gh/Faydyn/psy_logparser.git/master).
-
-Prepare your data to be uploaded by collecting them inside __one__ folder named `data`.
-
-__DISCLAIMER__: This option is more restricted when it comes to customization.
 
 
