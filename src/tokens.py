@@ -10,15 +10,15 @@ from src.constants import ARGS as CONST
 
 # user defined Args from constants combined
 CONST.BLOCK_ID = [CONST.TARGET_BLOCK,
-                 CONST.TARGET_ID]
+                  CONST.TARGET_ID]
 CONST.RT_RS = [CONST.TARGET_RT,
-              CONST.TARGET_RS]
+               CONST.TARGET_RS]
 CONST.TARGET_COLNAMES = [CONST.TARGET_TRIAL,
-                        CONST.TARGET_PICTURE,
-                        CONST.TARGET_RT,
-                        CONST.TARGET_RS]
+                         CONST.TARGET_PICTURE,
+                         CONST.TARGET_RT,
+                         CONST.TARGET_RS]
 CONST.MATCH_DICT_FOR_KEY = [CONST.OLD_GONO_TO_TARGET,
-                           CONST.OLD_EMO_TO_TARGET] * 2
+                            CONST.OLD_EMO_TO_TARGET] * 2
 
 # Static Values to access gono_emo_combi_block specific for each block
 CONST.GONO_0 = 'GONO_0'
@@ -113,7 +113,7 @@ id: {self.id}
         def clean_transform(cell):
             # Clean: Set_T\GAF14NES.jpg -> f14nes
             stripped = cell[CONST.TARGET_PICTURENAME_REMOVE_FIRST:
-                       -CONST.TARGET_PICTURENAME_REMOVE_LAST].lower()
+                            -CONST.TARGET_PICTURENAME_REMOVE_LAST].lower()
             # first three chars
             sex, *num = stripped[:CONST.TARGET_PICTURENAME_SPLIT_SEXNUM_AFTER]
             # other chars than first 3
@@ -123,7 +123,8 @@ id: {self.id}
             gono = self.emo_to_gono_block[target_emo]
             return f'{sex}_{"".join(num)}_{emo}_{gono}'
 
-        self.df[CONST.TARGET_PICTURE] = self.df[CONST.TARGET_PICTURE].apply(clean_transform)
+        self.df[CONST.TARGET_PICTURE] = self.df[CONST.TARGET_PICTURE].apply(
+            clean_transform)
 
     def create_final_df(self):
         final_colnames = [f'{self.block}_{mode}_{r}'
@@ -144,12 +145,14 @@ id: {self.id}
 
         for sig in CONST.SIG_COLNAMES:
             filter_df = self.df[  # Filters for Go/No
-                self.df[CONST.TARGET_PICTURE].str.endswith(CONST.SIGNAL_TO_GONO[sig])]
+                self.df[CONST.TARGET_PICTURE].str.endswith(
+                    CONST.SIGNAL_TO_GONO[sig])]
             filter_df = filter_df[  # Filters for 0/1 == RS
                 filter_df[CONST.TARGET_RS] == CONST.SIGNAL_TO_RS_VALUE[sig]]
             set_value_final_df(sig_name=sig)
 
-            if (nonsig := CONST.SIG_EQUIVALENT_NONSIG.get(sig)):  # om = mi, co = fa
+            if (
+            nonsig := CONST.SIG_EQUIVALENT_NONSIG.get(sig)):  # om = mi, co = fa
                 set_value_final_df(sig_name=nonsig)
 
         for nonsig in CONST.NONSIG_COLNAMES:  # calculate er = om + co
@@ -157,5 +160,3 @@ id: {self.id}
                 combined_colname = f'{self.block}_{CONST.NONSIG_COMBINED}_{r}'
                 nonsig_colname = f'{self.block}_{nonsig}_{r}'
                 self.final_df[combined_colname] += self.final_df[nonsig_colname]
-
-
