@@ -21,6 +21,7 @@ class Parser:
             self.accum_filename = f'{CONST.FILENAME_ACCUM_DATA}.{CONST.FILETYPE_IN}'
             self.filepaths = [path for path in self.filepaths
                               if not path.endswith(self.accum_filename)]
+            self.accum_filename = f'{CONST.FILENAME_ACCUM_DATA}.{CONST.FILETYPE_OUT}'
             self.accumulated_df = pd.DataFrame()
 
     # transformation and saving to .csv for each file, adding data to accum df
@@ -30,7 +31,8 @@ class Parser:
                 file_lines = self.lines_filepath(filepath)
                 tokens = Tokens(*file_lines)
                 tokens.transform()
-                tokens.save_as_csv(savepath)  # savepath can be overwritten, is optional arg
+                tokens.save_as_csv(
+                    savepath)  # savepath can be overwritten, is optional arg
 
                 if MODE == 'default':
                     self.append_to_accumulated_df(tokens.final_df)
@@ -42,11 +44,9 @@ class Parser:
 
         if MODE in ['default', 'accumulate']:
             self.save_accumulated_df_as_csv(savepath)
-            print(self.accumulated_df)
 
     def append_to_accumulated_df(self, token_df):
         self.accumulated_df = pd.concat([self.accumulated_df, token_df])
-
 
     def save_accumulated_df_as_csv(self, savepath):
         final_savepath = os.path.join(savepath, self.accum_filename)
@@ -64,4 +64,3 @@ class Parser:
             while line := f.readline():
                 lines.append(line.strip())
             return lines
-

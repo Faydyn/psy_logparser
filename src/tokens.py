@@ -5,6 +5,25 @@ import pandas as pd
 
 from src.constants import ARGS as CONST
 
+# user defined Args from constants combined
+CONST.BLOCK_ID = [CONST.TARGET_BLOCK,
+                 CONST.TARGET_ID]
+CONST.RT_RS = [CONST.TARGET_RT,
+              CONST.TARGET_RS]
+CONST.TARGET_COLNAMES = [CONST.TARGET_TRIAL,
+                        CONST.TARGET_PICTURE,
+                        CONST.TARGET_RT,
+                        CONST.TARGET_RS]
+CONST.MATCH_DICT_FOR_KEY = [CONST.OLD_GONO_TO_TARGET,
+                           CONST.OLD_EMO_TO_TARGET] * 2
+
+# Static Values to access gono_emo_combi_block specific for each block
+CONST.GONO_0 = 'GONO_0'
+CONST.GONO_1 = 'GONO_1'
+CONST.EMO_0 = 'EMO_0'
+CONST.EMO_1 = 'EMO_1'
+CONST.KEYS_BLOCK = [CONST.GONO_0, CONST.EMO_0, CONST.GONO_1, CONST.EMO_1]
+
 
 class Tokens:
     def __init__(self, exp, category, vpn, *data):
