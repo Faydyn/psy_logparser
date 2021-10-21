@@ -17,16 +17,16 @@ __DISCLAIMER__: This option is more __restricted__ when it comes to customizatio
 ### Option 2: Python 3 (Local)
 The following is a quick guide of a Python Installation primarily for Windows, with some comments for Unix-based Operating Systems.
 
-If you already installed `Python 3.9.7` or higher, you can skip this part. 
+If you already installed __Python 3.9.7__ or higher, you can skip this part. 
 
 #### 1. Python Installation Guide 
 
 __WARNING__: __Python 3.9.7__ cannot be used on Windows 7 or earlier.
-#### __WINDOWS__
+##### __WINDOWS__
 
 ######  Download and run Python 3
 1. Download __Python 3.9.7__ from the [Python Website](https://www.python.org/downloads/release/python-397/). Choose either __Windows installer (32-bit)__ or __Windows installer (64-bit, recommended)__.
-2. Run `python-3.9.7.exe` as __Administrator__.
+2. Run __python-3.9.7.exe__ as __Administrator__.
 3. Check "__Add Python 3.9 to PATH__". (Optional, but recommended)
 4. Choose "__Install Now__". ![Install Python 3 Windows](img/py_install_start_win.png)
 5. Wait for installation to complete.
@@ -42,26 +42,26 @@ __WARNING__: __Python 3.9.7__ cannot be used on Windows 7 or earlier.
 5. Type `quit()` to exit Python.
 ![Python 3 Testing](img/py_check_done.png)
 
-#### __OS X__
+##### __OS X__
 Download Anaconda via Homebrew and simply set up an Environment with Python 3.9.7.
 
 You might need to use `python3` in __Terminal__.
 Contact me, when issues arise during this. 
 
-#### __LINUX__
+##### __LINUX__
 I guess, you know how to do this.
 
 
 #### 2. Github Guide 
 Now you need to download the files from this repository. They can be download as `zip`, or you can __clone__ them. 
 
-#### __DOWNLOAD ZIP__
+##### __DOWNLOAD ZIP__
 Click the green "__Code__" at the top of this page and choose "__Download ZIP__".
 Move the files where you like - as long as you got the permissions to access the chosen directory.
 
 ![Download from Github](img/git_dl_clone.png)
 
-#### __GIT CLONE__ 
+##### __GIT CLONE__ 
 Choose a directory inside a __Terminal__ (with `cd`, see below) and type `git clone https://github.com/Faydyn/psy_logparser.git`.
 
 
@@ -73,6 +73,7 @@ Choose a directory inside a __Terminal__ (with `cd`, see below) and type `git cl
 
 1. Open up __Command Prompt__,__PowerShell__ or a __Terminal__ (Unix) of your choice.
 2. Copy/Type the path of the downloaded/cloned repository (this is `<PATH>`) to the Prompt/Shell: `cd <PATH>\psy_logparser`.
+
 ![Changing Directory in Terminal](img/terminal_cd_done.png)
 3. Type `pip install -r requirements.txt` and `pip3 install -r requirements.txt`, but the latter should suffice in most cases.
 
