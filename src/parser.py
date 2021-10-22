@@ -10,7 +10,7 @@ from src.tokens import Tokens
 
 class Parser:
 
-    # filters for .txt (default filetype input), saves to path specified in constants.json
+    # filters for defined FILETYPE_IN, saves to SAVE_PATH (constants.json)
     # datapath can also be overwritten if it is set in main.py
     def __init__(self, datapath=CONST.DATA_PATH):
         self.filepaths = [os.path.join(datapath, file)
@@ -18,10 +18,9 @@ class Parser:
                           if file.endswith(CONST.FILETYPE_IN)]
 
         if MODE in ['default', 'accumulate']:
-            self.accum_filename = f'{CONST.FILENAME_ACCUM_DATA}.{CONST.FILETYPE_IN}'
+            exclude = f'{CONST.FILENAME_ACCUM_DATA}.{CONST.FILETYPE_IN}'
             self.filepaths = [path for path in self.filepaths
-                              if not path.endswith(self.accum_filename)]
-            self.accum_filename = f'{CONST.FILENAME_ACCUM_DATA}.{CONST.FILETYPE_OUT}'
+                              if not path.endswith(exclude)]
             self.accumulated_df = pd.DataFrame()
 
     # transformation and saving to .csv for each file, adding data to accum df
@@ -49,9 +48,11 @@ class Parser:
         self.accumulated_df = pd.concat([self.accumulated_df, token_df])
 
     def save_accumulated_df_as_csv(self, savepath):
-        final_savepath = os.path.join(savepath, self.accum_filename)
+        filename = f'{CONST.FILENAME_ACCUM_DATA}.{CONST.FILETYPE_OUT}'
+        final_savepath = os.path.join(savepath, filename)
 
         self.accumulated_df = self.accumulated_df.fillna(CONST.FILL_EMPTY_WITH)
+        self.accumulated_df = self.accumulated_df.round(CONST.DECIMAL_PLACES)
         self.accumulated_df.to_csv(final_savepath,
                                    index=False,
                                    float_format=f'%.{CONST.DECIMAL_PLACES}f')

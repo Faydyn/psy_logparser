@@ -29,17 +29,15 @@ CONST.KEYS_BLOCK = [CONST.GONO_0, CONST.EMO_0, CONST.GONO_1, CONST.EMO_1]
 
 
 class Tokens:
+
     def __init__(self, exp, category, vpn, *data):
-        def get_value(token):  # removes the "keyword"
-            _, value = token.split(':')
-            return value.strip()
 
         self.gono_emo_combi_block = {}  # Dict of Order GoNo/Emo in Block
         self.emo_to_gono_block = {}
-        self.experiment = get_value(exp)
-        self.id = get_value(vpn)
-        self.block = get_value(category)
-        self.df = data  # is List[str] in this state
+        self.experiment = self.get_value(exp)
+        self.id = self.get_value(vpn)
+        self.block = self.get_value(category)
+        self.df = self.create_df(data)
         self.final_df = pd.DataFrame()
 
     # For debugging purposes
@@ -54,7 +52,6 @@ id: {self.id}
         self.split_block()
         self.convert_block()
         self.set_emo_to_gn()
-        self.preprocess_df()
         self.transform_picture_col()
         self.create_final_df()
         self.fill_final_df()
@@ -64,13 +61,36 @@ id: {self.id}
         full_savepath = os.path.join(savedir, filename)
 
         self.final_df = self.final_df.fillna(CONST.FILL_EMPTY_WITH)
+        self.final_df = self.final_df.round(CONST.DECIMAL_PLACES)
         self.final_df.to_csv(full_savepath,
                              index=False,
                              float_format=f'%.{CONST.DECIMAL_PLACES}f')
 
-    # PRIVATE FUNCTIONS #################################################
+    # STATIC FUNCTIONS FOR INIT ########################################
+    @staticmethod
+    def get_value(key_value):  # removes the "keyword"
+        _, value = key_value.split(':')
+        return value.strip()
+
+    # transforms the lines into a proper Pandas DataFrame
+    @staticmethod
+    def create_df(data):
+        data_matrix = [line.split('\t') for line in data]  # Tabs
+
+        #  Drop colnames and replace with constant and set_index to trial
+        df = pd.DataFrame(data_matrix[1:], columns=CONST.TARGET_COLNAMES)
+        df = df.set_index(CONST.TARGET_TRIAL)
+
+        # change types to int with numerics
+        df[CONST.TARGET_RT] = pd.to_numeric(df[CONST.TARGET_RT])
+        df[CONST.TARGET_RS] = pd.to_numeric(df[CONST.TARGET_RS])
+        return df
+
+    # HELPER FUNCTIONS #################################################
     def set_gono_emo_combi_block(self, values):
         self.gono_emo_combi_block = dict(zip(CONST.KEYS_BLOCK, values))
+
+    # PRIVATE FUNCTIONS ################################################
 
     def split_block(self):  # INPUT: "TGT NEUTRAL, NTGT HAPPY"
         gono_emo_pairs = [x.strip().split(' ') for x in self.block.split(', ')]
@@ -80,9 +100,9 @@ id: {self.id}
 
     def convert_block(self):
         block_data = []
-        for KEY, gono_or_emo in zip(CONST.KEYS_BLOCK, CONST.MATCH_DICT_FOR_KEY):
+        for KEY, convert in zip(CONST.KEYS_BLOCK, CONST.MATCH_DICT_FOR_KEY):
             gono_or_emo_block = self.gono_emo_combi_block[KEY]
-            converted_gono_or_emo_block = gono_or_emo[gono_or_emo_block]
+            converted_gono_or_emo_block = convert[gono_or_emo_block]
             block_data.append(converted_gono_or_emo_block)
 
         self.set_gono_emo_combi_block(values=block_data)  # update w/ new terms
@@ -96,18 +116,6 @@ id: {self.id}
 
         set_dict_emo_to_gono_block(CONST.EMO_0, CONST.GONO_0)
         set_dict_emo_to_gono_block(CONST.EMO_1, CONST.GONO_1)
-
-    # transforms the lines into a proper Pandas DataFrame
-    def preprocess_df(self):
-        data_matrix = [line.split('\t') for line in self.df]  # Tabs
-
-        #  Drop colnames and replace with constant and set_index to trial
-        self.df = pd.DataFrame(data_matrix[1:], columns=CONST.TARGET_COLNAMES)
-        self.df = self.df.set_index(CONST.TARGET_TRIAL)
-
-        # change types to int with numerics
-        self.df[CONST.TARGET_RT] = pd.to_numeric(self.df[CONST.TARGET_RT])
-        self.df[CONST.TARGET_RS] = pd.to_numeric(self.df[CONST.TARGET_RS])
 
     def transform_picture_col(self):
         def clean_transform(cell):
@@ -123,12 +131,14 @@ id: {self.id}
             gono = self.emo_to_gono_block[target_emo]
             return f'{sex}_{"".join(num)}_{emo}_{gono}'
 
-        self.df[CONST.TARGET_PICTURE] = self.df[CONST.TARGET_PICTURE].apply(
-            clean_transform)
+        # noinspection PyTupleItemAssignment
+        self.df[CONST.TARGET_PICTURE] = \
+            self.df[CONST.TARGET_PICTURE].apply(clean_transform)
 
     def create_final_df(self):
         final_colnames = [f'{self.block}_{mode}_{r}'
-                          for mode in CONST.FINAL_COLNAMES for r in CONST.RT_RS]
+                          for mode in CONST.FINAL_COLNAMES
+                          for r in CONST.RT_RS]
         all_colnames = CONST.BLOCK_ID + final_colnames
         self.final_df = pd.DataFrame(np.zeros((1, 16)), columns=all_colnames)
 
@@ -151,12 +161,12 @@ id: {self.id}
                 filter_df[CONST.TARGET_RS] == CONST.SIGNAL_TO_RS_VALUE[sig]]
             set_value_final_df(sig_name=sig)
 
-            if (
-            nonsig := CONST.SIG_EQUIVALENT_NONSIG.get(sig)):  # om = mi, co = fa
+            # om = mi, co = fa
+            if nonsig := CONST.SIG_EQUIVALENT_NONSIG.get(sig):
                 set_value_final_df(sig_name=nonsig)
 
         for nonsig in CONST.NONSIG_COLNAMES:  # calculate er = om + co
             for r in CONST.RT_RS:
-                combined_colname = f'{self.block}_{CONST.NONSIG_COMBINED}_{r}'
+                comb_colname = f'{self.block}_{CONST.NONSIG_COMBINED}_{r}'
                 nonsig_colname = f'{self.block}_{nonsig}_{r}'
-                self.final_df[combined_colname] += self.final_df[nonsig_colname]
+                self.final_df[comb_colname] += self.final_df[nonsig_colname]

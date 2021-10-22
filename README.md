@@ -137,7 +137,7 @@ __Change mode as necessary.__ Change path if you moved __constants.json__.
 
 <br><br>
 ### Option 2: Python 3 (Local)
-__DISCLAIMER__: On Windows, paths used inside __json__ and __py__ files have to use double backslashes (`\\`) to seperate directories.<br> 
+__DISCLAIMER__: On Windows, paths used inside __json__ and __py__ files have to use double backslashes (`\\`) to separate directories.<br> 
 E.g.: `"DATA_PATH" : "C:\\Users\\nilsseitz\\Downloads\\data",`
 
 <br>
