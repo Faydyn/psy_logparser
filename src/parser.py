@@ -1,4 +1,5 @@
 # Copyright © 2021 Nils Seitz, Prof. Dr. Alexander Lischke
+
 import os
 
 import pandas as pd
@@ -9,59 +10,81 @@ from src.tokens import Tokens
 
 
 class Parser:
-
-    # filters for defined FILETYPE_IN, saves to SAVE_PATH (constants.json)
-    # datapath can also be overwritten if it is set in main.py
+    # filters for defined FILETYPE_IN, saves to SAVE_PATH (see config file)
+    # datapath can also be overwritten, if set in main.py
     def __init__(self, datapath=CONST.DATA_PATH):
         self.filepaths = [os.path.join(datapath, file)
                           for *_, files in os.walk(datapath) for file in files
                           if file.endswith(CONST.FILETYPE_IN)]
 
+        # check to exclude to accumulate file, so it does not accumulate itself
+        # only create accumulated_df, if we actually accumulate
         if MODE in ['default', 'accumulate']:
             exclude = f'{CONST.FILENAME_ACCUM_DATA}.{CONST.FILETYPE_IN}'
             self.filepaths = [path for path in self.filepaths
                               if not path.endswith(exclude)]
             self.accumulated_df = pd.DataFrame()
 
-    # transformation and saving to .csv for each file, adding data to accum df
+    # reading in, processing and saving as FILETYPE_OUT
+    # adding data points to accumulated_df and saving again in the end
+    # savepath can also be overwritten, if set in main.py
     def run(self, savepath=CONST.SAVE_PATH):
+        # PHASE 1
         if MODE in ['default', 'preprocess']:
             for filepath in self.filepaths:
+                # File get split into Lines
                 file_lines = self.lines_filepath(filepath)
-                tokens = Tokens(*file_lines)
-                tokens.transform()
-                tokens.save_as_csv(
-                    savepath)  # savepath can be overwritten, is optional arg
 
+                # Lines get split to Token (experiment, block, id, [data])
+                tokens = Tokens(*file_lines)
+                tokens.transform()  # All Data Manipulation happens internally
+                tokens.save_as_csv(savepath)  # saves final formatted data
+
+                # Optimization: Final data can immediately be accumulated
+                # This saves time by not reading in the data again
                 if MODE == 'default':
                     self.append_to_accumulated_df(tokens.final_df)
 
+        # PHASE 2
         elif MODE == 'accumulate':
+            # Data is already formatted, so just read in and accumulate
             for filepath in self.filepaths:
+                # File gets read in to DataFrame immediately
                 csv_df = pd.read_csv(filepath)
-                self.append_to_accumulated_df(csv_df)
+                self.append_to_accumulated_df(csv_df)  # concat both DataFrames
 
         if MODE in ['default', 'accumulate']:
-            self.save_accumulated_df_as_csv(savepath)
+            self.save_accumulated_df_as_csv(savepath)  # save accumulated data
 
-    def append_to_accumulated_df(self, token_df):
-        self.accumulated_df = pd.concat([self.accumulated_df, token_df])
-
-    def save_accumulated_df_as_csv(self, savepath):
-        filename = f'{CONST.FILENAME_ACCUM_DATA}.{CONST.FILETYPE_OUT}'
-        final_savepath = os.path.join(savepath, filename)
-
-        self.accumulated_df = self.accumulated_df.fillna(CONST.FILL_EMPTY_WITH)
-        self.accumulated_df = self.accumulated_df.round(CONST.DECIMAL_PLACES)
-        self.accumulated_df.to_csv(final_savepath,
-                                   index=False,
-                                   float_format=f'%.{CONST.DECIMAL_PLACES}f')
-
-    # reads in all lines of a file for a given path to a list
+    # STATIC FUNCTIONS ################################################
+    # reads in all lines of a file for a given path, return them as List[str]
     @staticmethod
     def lines_filepath(filepath):
         with open(filepath, 'r') as f:
             lines = []
-            while line := f.readline():
-                lines.append(line.strip())
-            return lines
+            while line := f.readline():  # runs as long as there are lines left
+                lines.append(line.strip())  # strip removes "\n" at end
+            return lines  # returns a list of all stripped lines
+
+    # HELPER FUNCTIONS ################################################
+    # Automatically appends the new data
+    # Merges existing or add not yet existing columns
+    def append_to_accumulated_df(self, token_df):
+        self.accumulated_df = pd.concat([self.accumulated_df, token_df])
+
+    # Fills empty values and rounds values before saving to savepath
+    def save_accumulated_df_as_csv(self, savepath):
+        filename = f'{CONST.FILENAME_ACCUM_DATA}.{CONST.FILETYPE_OUT}'
+        final_savepath = os.path.join(savepath, filename)
+
+        # Fills the empty data points that were created when
+        # adding DataFrames that did not have identical columns
+        self.accumulated_df = self.accumulated_df.fillna(CONST.FILL_EMPTY_WITH)
+
+        # Rounds all numeric values of the DataFrame to defined decimal places
+        self.accumulated_df = self.accumulated_df.round(CONST.DECIMAL_PLACES)
+
+        # float_format makes all values have uniform decimal places
+        self.accumulated_df.to_csv(final_savepath,
+                                   index=False,  # doesn't save index values
+                                   float_format=f'%.{CONST.DECIMAL_PLACES}f')
