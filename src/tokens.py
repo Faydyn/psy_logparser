@@ -1,6 +1,5 @@
 # Copyright © 2021 Nils Seitz, Prof. Dr. Alexander Lischke
 
-
 import os
 
 import numpy as np
@@ -8,30 +7,31 @@ import pandas as pd
 
 from src.constants import ARGS as CONST
 
-# user defined Args from constants combined
-CONST.BLOCK_ID = [CONST.TARGET_BLOCK,
-                  CONST.TARGET_ID]
-CONST.RT_RS = [CONST.TARGET_RT,
-               CONST.TARGET_RS]
-CONST.TARGET_COLNAMES = [CONST.TARGET_TRIAL,
-                         CONST.TARGET_PICTURE,
-                         CONST.TARGET_RT,
-                         CONST.TARGET_RS]
-CONST.MATCH_DICT_FOR_KEY = [CONST.OLD_GONO_TO_TARGET,
-                            CONST.OLD_EMO_TO_TARGET] * 2
 
-# Static Values to access gono_emo_combi_block specific for each block
-CONST.GONO_0 = 'GONO_0'
-CONST.GONO_1 = 'GONO_1'
-CONST.EMO_0 = 'EMO_0'
-CONST.EMO_1 = 'EMO_1'
-CONST.KEYS_BLOCK = [CONST.GONO_0, CONST.EMO_0, CONST.GONO_1, CONST.EMO_1]
+def load_user_defined_constants():  # user defined Args from constants combined
+    CONST.BLOCK_ID = [CONST.TARGET_BLOCK,
+                      CONST.TARGET_ID]
+    CONST.RT_RS = [CONST.TARGET_RT,
+                   CONST.TARGET_RS]
+    CONST.TARGET_COLNAMES = [CONST.TARGET_TRIAL,
+                             CONST.TARGET_PICTURE,
+                             CONST.TARGET_RT,
+                             CONST.TARGET_RS]
+    CONST.MATCH_DICT_FOR_KEY = [CONST.OLD_GONO_TO_TARGET,
+                                CONST.OLD_EMO_TO_TARGET] * 2  # GoNo,Emo,GoNo,Emo
+
+    # Constants to access gono_emo_combi_block (Dict) specific for each block
+    CONST.GONO_0 = 'GONO_0'
+    CONST.GONO_1 = 'GONO_1'
+    CONST.EMO_0 = 'EMO_0'
+    CONST.EMO_1 = 'EMO_1'
+    CONST.KEYS_BLOCK = [CONST.GONO_0, CONST.EMO_0, CONST.GONO_1, CONST.EMO_1]
 
 
 class Tokens:
+    load_user_defined_constants()  # statically load additional constants
 
     def __init__(self, exp, category, vpn, *data):
-
         self.gono_emo_combi_block = {}  # Dict of Order GoNo/Emo in Block
         self.emo_to_gono_block = {}
         self.experiment = self.get_value(exp)
@@ -48,6 +48,7 @@ Block: {self.block}
 id: {self.id}
 {self.df.__str__()}'''
 
+    # Pipeline for Data Manipulation
     def transform(self):
         self.split_block()
         self.convert_block()
@@ -56,47 +57,61 @@ id: {self.id}
         self.create_final_df()
         self.fill_final_df()
 
+    # Fills empty values and rounds values before saving to savepath
     def save_as_csv(self, savedir):
         filename = f'{self.block}{self.id}.{CONST.FILETYPE_OUT}'
         full_savepath = os.path.join(savedir, filename)
 
+        # Fills the empty data points that were created when
+        # adding DataFrames that did not have identical columns
         self.final_df = self.final_df.fillna(CONST.FILL_EMPTY_WITH)
+
+        # Rounds all numeric values of the DataFrame to defined decimal places
         self.final_df = self.final_df.round(CONST.DECIMAL_PLACES)
+
+        # float_format makes all values have uniform decimal places
         self.final_df.to_csv(full_savepath,
-                             index=False,
+                             index=False,  # doesn't save index values
                              float_format=f'%.{CONST.DECIMAL_PLACES}f')
 
-    # STATIC FUNCTIONS FOR INIT ########################################
+    # STATIC FUNCTIONS ################################################
     @staticmethod
-    def get_value(key_value):  # removes the "keyword"
+    def get_value(key_value):  # removes the "key" and strips value
+        # "id: NS11.11.88" -> " NS11.11.88" -> "NS11.11.88"
         _, value = key_value.split(':')
         return value.strip()
 
-    # transforms the lines into a proper Pandas DataFrame
+    # transforms the lines of a file into a proper Pandas DataFrame
     @staticmethod
     def create_df(data):
-        data_matrix = [line.split('\t') for line in data]  # Tabs
+        # data points in file lines are separated by tabs
+        data_matrix = [line.split('\t') for line in data]  # "\t" = Tab
 
-        #  Drop colnames and replace with constant and set_index to trial
+        # Drop the first row with [1:] (column names)
+        # Replace with the defined column names from constant
         df = pd.DataFrame(data_matrix[1:], columns=CONST.TARGET_COLNAMES)
+
+        # Replace the default index with the Trial number
         df = df.set_index(CONST.TARGET_TRIAL)
 
-        # change types to int with numerics
+        # change types to int with numerics because we do math on these cols
         df[CONST.TARGET_RT] = pd.to_numeric(df[CONST.TARGET_RT])
         df[CONST.TARGET_RS] = pd.to_numeric(df[CONST.TARGET_RS])
+
         return df
 
     # HELPER FUNCTIONS #################################################
-    def set_gono_emo_combi_block(self, values):
+    # Sets up the GoNo or Emo (with respect to order) found in block
+    def set_gono_emo_combi_block(self, values):  # {gn0 : "TGT", ...}
         self.gono_emo_combi_block = dict(zip(CONST.KEYS_BLOCK, values))
 
     # PRIVATE FUNCTIONS ################################################
-
-    def split_block(self):  # INPUT: "TGT NEUTRAL, NTGT HAPPY"
+    def split_block(self):  # preprocesses block data for convert_block
         gono_emo_pairs = [x.strip().split(' ') for x in self.block.split(', ')]
         gono_emo_combi = [x for gono_emo in gono_emo_pairs for x in gono_emo]
         self.set_gono_emo_combi_block(values=gono_emo_combi)
-        # OUTPUT: { gn0 : "TGT", .. , emo1 : "HAPPY" }
+        # "TGT NEUTRAL, NTGT HAPPY" -> "TGT NEUTRAL" "NTGT HAPPY" ->
+        # "TGT" "NEUTRAL" "NTGT" "HAPPY" -> {gn0 : "TGT", ..., emo1 : "HAPPY"}
 
     def convert_block(self):
         block_data = []
