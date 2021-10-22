@@ -26,7 +26,7 @@ Open this [Jupyter Notebook on Binder](https://mybinder.org/v2/gh/Faydyn/psy_log
 __DISCLAIMER__: __Python 3.9.7__ cannot be used on Windows 7 or earlier.
 
 The following is a quick guide of a Python Installation primarily for Windows, with some comments for Unix-based Operating Systems. <br>
-If you already installed __Python 3.9.7__ or higher, you can [skip](https://github.com/Faydyn/psy_logparser#2-github-guide) this part.
+If you already installed __Python 3.9.7__ or higher, you can skip this part.
 <br>
 <br>
 #### 1 PYTHON 
