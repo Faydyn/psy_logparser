@@ -1,7 +1,7 @@
 {
     "default" : {
-        "DATA_PATH" : "/Users/nilsseitz/Coding/PycharmProjects/psy_logparser/GoNoGo",
-        "SAVE_PATH" : "/Users/nilsseitz/Coding/PycharmProjects/psy_logparser/results",
+        "DATA_PATH" : "",
+        "SAVE_PATH" : "results",
         "FILETYPE_IN" : "txt",
         "FILETYPE_OUT" : "csv",
         "FILENAME_ACCUM_DATA" : "accum_data",
@@ -68,8 +68,8 @@
     },
 
     "preprocess" : {
-        "DATA_PATH" : "/Users/nilsseitz/Coding/PycharmProjects/psy_logparser/GoNoGo",
-        "SAVE_PATH" : "/Users/nilsseitz/Coding/PycharmProjects/psy_logparser/results",
+        "DATA_PATH" : "",
+        "SAVE_PATH" : "results",
         "FILETYPE_IN" : "txt",
         "FILETYPE_OUT" : "csv",
 
@@ -135,8 +135,8 @@
     },
 
     "accumulate" : {
-        "DATA_PATH" : "/Users/nilsseitz/Coding/PycharmProjects/psy_logparser/results",
-        "SAVE_PATH" : "/Users/nilsseitz/Coding/PycharmProjects/psy_logparser/results",
+        "DATA_PATH" : "",
+        "SAVE_PATH" : "results",
         "FILETYPE_IN" : "csv",
         "FILETYPE_OUT" : "csv",
         "FILENAME_ACCUM_DATA" : "accum_data",
