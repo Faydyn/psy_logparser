@@ -17,8 +17,8 @@ This program came to life to solve a parsing problem for Prof. Dr. Alexander Lis
 
 ### Option 1: Jupyter Notebook (Browser)
 
-Open this [Jupyter Notebook on Binder](https://mybinder.org/v2/gh/Faydyn/psy_logparser.git/master).
-
+Open this [Jupyter Notebook on Binder](https://mybinder.org/v2/gh/Faydyn/psy_logparser.git/jupyter).
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Faydyn/psy_logparser.git/jupyter)
 <br>
 <br>
 
