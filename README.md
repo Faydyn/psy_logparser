@@ -5,7 +5,8 @@
 <br>
 Parses from .txt-Files to a certain format, cleans, processes and saves the data.
 
-Parser has multiple parts, that can be chosen individually or chained together to produce a final, accumulated result.
+Parser has multiple parts, that can be chosen individually or chained together to produce a final, accumulated result.<br>
+It will mostly be used to parse data of studies in Cognitive Neuroscience.
 
 This program came to life to solve a parsing problem for Prof. Dr. Alexander Lischke.
 
