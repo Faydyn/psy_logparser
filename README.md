@@ -108,8 +108,6 @@ Choose a directory inside a __Terminal__ (with `cd`, see below) and type `git cl
 ### main
 - __main.py__: <br>
 Entry point of the program and later run on command line for __Option 2__. It creates a Parser and runs it.
-- __parser.ipynb__: <br>
-Jupyter notebook, that acts as main file and displays the final result. (Only visible in Option 2)
 
 ### constants
 - __constants.json__: <br>
