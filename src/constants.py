@@ -16,3 +16,6 @@ class Args:
 
 with open(os.path.abspath(__JSON_FILEPATH)) as f:
     ARGS = Args(**json.load(f)[MODE])  # Instantiate this class as global var
+
+if not os.path.isdir(ARGS.SAVE_PATH):
+    os.makedirs(ARGS.SAVE_PATH)
