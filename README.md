@@ -164,6 +164,8 @@ I tried to give self-explanatory names for these constants. If in doubt, don't c
 7. Change __JSON_FILEPATH__. (Double backslashes!)<br>
 (Only, if you moved that file or want to use another config)
 
+__Only use `NaN`, `""`__ (both leave empty) __or `0.0`__ (but then indistinguishable from "real 0") __for `FILL_EMPTY_WITH`!__
+
 <br>
 
 #### RUN PROGRAM

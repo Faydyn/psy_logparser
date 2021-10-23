@@ -65,7 +65,7 @@
             "mi" : "om",
             "fa" : "co"
         },
-        "FILL_EMPTY_WITH": 0.0
+        "FILL_EMPTY_WITH": ""
     },
 
     "preprocess" : {
@@ -142,6 +142,6 @@
         "FILETYPE_OUT" : "csv",
         "FILENAME_ACCUM_DATA" : "accum_data",
         "DECIMAL_PLACES" : 3,
-        "FILL_EMPTY_DATA_WITH": 0.0
+        "FILL_EMPTY_DATA_WITH": ""
     }
 }

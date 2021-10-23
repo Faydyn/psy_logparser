@@ -79,6 +79,10 @@ class Parser:
 
         # Fills the empty data points that were created when
         # adding DataFrames that did not have identical columns
+        # FILL VALUE SHOULD BE:  (E.g. "FILL_EMPTY_WITH" : NaN)
+        #   A) "" or NaN (Not a Number) - Then "Holes" are left empty
+        #   B) 0.0 - Then "Holes" from merging DataFrames are filled
+        #      Disadvantage: These Filler-0 are indistinguishable from real 0
         self.accumulated_df = self.accumulated_df.fillna(CONST.FILL_EMPTY_WITH)
 
         # float_format -> all values have uniform decimal places (rounds, too)
