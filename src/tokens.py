@@ -66,10 +66,7 @@ id: {self.id}
         # adding DataFrames that did not have identical columns
         self.final_df = self.final_df.fillna(CONST.FILL_EMPTY_WITH)
 
-        # Rounds all numeric values of the DataFrame to defined decimal places
-        self.final_df = self.final_df.round(CONST.DECIMAL_PLACES)
-
-        # float_format makes all values have uniform decimal places
+        # float_format -> all values have uniform decimal places (rounds, too)
         self.final_df.to_csv(full_savepath,
                              index=False,  # doesn't save index values
                              float_format=f'%.{CONST.DECIMAL_PLACES}f')

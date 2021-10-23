@@ -81,10 +81,7 @@ class Parser:
         # adding DataFrames that did not have identical columns
         self.accumulated_df = self.accumulated_df.fillna(CONST.FILL_EMPTY_WITH)
 
-        # Rounds all numeric values of the DataFrame to defined decimal places
-        self.accumulated_df = self.accumulated_df.round(CONST.DECIMAL_PLACES)
-
-        # float_format makes all values have uniform decimal places
+        # float_format -> all values have uniform decimal places (rounds, too)
         self.accumulated_df.to_csv(final_savepath,
                                    index=False,  # doesn't save index values
                                    float_format=f'%.{CONST.DECIMAL_PLACES}f')
