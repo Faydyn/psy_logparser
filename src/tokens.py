@@ -183,7 +183,6 @@ id: {self.id}
             self.final_df[colname_rt] = \
                 filter_df[CONST.TARGET_RT].sum() / rs if rs else 0.0
 
-
         # block and id stay identical
         self.final_df[CONST.TARGET_BLOCK] = self.block  # df["block"] = <block>
         self.final_df[CONST.TARGET_ID] = self.id  # df["id"] = <id>
