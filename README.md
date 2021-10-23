@@ -23,7 +23,8 @@ Open this [Jupyter Notebook on Binder](https://mybinder.org/v2/gh/Faydyn/psy_log
 <br>
 
 ### Option 2: Python 3 (Local)
-__DISCLAIMER__: __Python 3.9.7__ cannot be used on Windows 7 or earlier.
+__DISCLAIMER__: __Python 3.9.7__ cannot be used on Windows 7 or earlier.<br>
+In Case you only have Windows 7, try installing __Python 3.7.12__ (cannot be used on Windows XP or earlier), which *should* also work.
 
 The following is a quick guide of a Python Installation primarily for Windows, with some comments for Unix-based Operating Systems. <br>
 If you already installed __Python 3.9.7__ or higher, you can skip this part.
