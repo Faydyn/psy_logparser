@@ -17,8 +17,6 @@ This program came to life to solve a parsing problem for Prof. Dr. Alexander Lis
 
 ### Option 1: Jupyter Notebook (Browser)
 
-__DISCLAIMER__: This option is more __restricted__ when it comes to customization.
-
 Open this [Jupyter Notebook on Binder](https://mybinder.org/v2/gh/Faydyn/psy_logparser.git/master).
 
 <br>
@@ -137,9 +135,12 @@ Heart of all Data Manipulation. Splits, converts, rearranges data as defined in 
 ## How to use the parser?
 
 ### Option 1: Jupyter Notebook (Browser)
-1. Upload your data in a folder named __data__.
-2. Run all code cells of the Notebook.
-3. Download your results from __out__.
+1. Create a folder.
+2. Navigate inside the folder
+3. Upload data there, just Ctrl/Cmd+A and Drag-and-Drop files.
+4. Replace `name_of_data_folder` below with the name of created folder.
+5. Parsed and accumulated data will be in __results__ to view.
+6. Generates a zip on top to download.
 
 <br><br>
 ### Option 2: Python 3 (Local)
