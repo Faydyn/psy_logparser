@@ -77,11 +77,6 @@ class Parser:
         filename = f'{CONST.FILENAME_ACCUM_DATA}.{CONST.FILETYPE_OUT}'
         final_savepath = os.path.join(savepath, filename)
 
-        # Fill empty data created adding DataFrames with not identical columns
-        # Define FILL_EMPTY_WITH as : A) NaN (leaves empty and rounding works)
-        # B) 0.0 (Problem: then indistinguishable from the real 0s in the DF)
-        self.accumulated_df = self.accumulated_df.fillna(CONST.FILL_EMPTY_WITH)
-
         # float_format -> all values have uniform decimal places (rounds, too)
         self.accumulated_df.to_csv(final_savepath,
                                    index=False,  # doesn't save index values

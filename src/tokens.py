@@ -62,10 +62,6 @@ id: {self.id}
         filename = f'{self.block}{self.id}.{CONST.FILETYPE_OUT}'
         final_savepath = os.path.join(savepath, filename)
 
-        # Fill empty data created adding DataFrames with not identical columns
-        # Define FILL_EMPTY_WITH as : A) NaN; B)0.0
-        self.final_df = self.final_df.fillna(CONST.FILL_EMPTY_WITH)
-
         # float_format -> all values have uniform decimal places (rounds, too)
         self.final_df.to_csv(final_savepath,
                              index=False,  # doesn't save index values
@@ -180,9 +176,13 @@ id: {self.id}
             colname_rt = f'{self.block}_{sig_name}_{CONST.TARGET_RT}'
             colname_rs = f'{self.block}_{sig_name}_{CONST.TARGET_RS}'
 
-            # Mean for RT, Count for RS and cast to float for formatting later
-            self.final_df[colname_rt] = filter_df[CONST.TARGET_RT].mean()
-            self.final_df[colname_rs] = float(len(filter_df[CONST.TARGET_RS]))
+            # Count for RS and cast to float for following calculation
+            # Sum/Count for RT, since mean doesn't return 0 on empty cols
+            self.final_df[colname_rs] = \
+                (rs := float(len(filter_df[CONST.TARGET_RS])))
+            self.final_df[colname_rt] = \
+                filter_df[CONST.TARGET_RT].sum() / rs if rs else 0.0
+
 
         # block and id stay identical
         self.final_df[CONST.TARGET_BLOCK] = self.block  # df["block"] = <block>
