@@ -58,18 +58,18 @@ id: {self.id}
         self.fill_final_df()
 
     # Fills empty values and rounds values before saving to savepath
-    def save_as_csv(self, savedir):
+    def save_as_csv(self, savepath):
         filename = f'{self.block}{self.id}.{CONST.FILETYPE_OUT}'
-        full_savepath = os.path.join(savedir, filename)
+        final_savepath = os.path.join(savepath, filename)
 
-        # Fills the empty data points that were created when
-        # adding DataFrames that did not have identical columns
+        # Fill empty data created adding DataFrames with not identical columns
+        # Define FILL_EMPTY_WITH as : A) NaN; B)0.0
         self.final_df = self.final_df.fillna(CONST.FILL_EMPTY_WITH)
 
         # float_format -> all values have uniform decimal places (rounds, too)
-        self.final_df.to_csv(full_savepath,
-                             index=False,  # doesn't save index values
-                             float_format=f'%.{CONST.DECIMAL_PLACES}f')
+        self.final_df.to_csv(final_savepath,
+                                   index=False,  # doesn't save index values
+                                   float_format=f'%.{CONST.DECIMAL_PLACES}f')
 
     # STATIC FUNCTIONS ################################################
     @staticmethod

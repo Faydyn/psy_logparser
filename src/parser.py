@@ -77,12 +77,9 @@ class Parser:
         filename = f'{CONST.FILENAME_ACCUM_DATA}.{CONST.FILETYPE_OUT}'
         final_savepath = os.path.join(savepath, filename)
 
-        # Fills the empty data points that were created when
-        # adding DataFrames that did not have identical columns
-        # FILL VALUE SHOULD BE:  (E.g. "FILL_EMPTY_WITH" : NaN)
-        #   A) "" or NaN (Not a Number) - Then "Holes" are left empty
-        #   B) 0.0 - Then "Holes" from merging DataFrames are filled
-        #      Disadvantage: These Filler-0 are indistinguishable from real 0
+        # Fill empty data created adding DataFrames with not identical columns
+        # Define FILL_EMPTY_WITH as : A) NaN (leaves empty and rounding works)
+        # B) 0.0 (Problem: then indistinguishable from the real 0s in the DF)
         self.accumulated_df = self.accumulated_df.fillna(CONST.FILL_EMPTY_WITH)
 
         # float_format -> all values have uniform decimal places (rounds, too)
