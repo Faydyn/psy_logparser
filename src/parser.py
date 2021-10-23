@@ -11,7 +11,7 @@ from src.tokens import Tokens
 
 class Parser:
     # filters for defined FILETYPE_IN, saves to SAVE_PATH (see config file)
-    # datapath can also be overwritten, if set in main.py
+    # datapath is given bei notebook
     def __init__(self, datapath=CONST.DATA_PATH):
         self.filepaths = [os.path.join(datapath, file)
                           for *_, files in os.walk(datapath) for file in files
@@ -27,7 +27,7 @@ class Parser:
 
     # reading in, processing and saving as FILETYPE_OUT
     # adding data points to accumulated_df and saving again in the end
-    # savepath can also be overwritten, if set in main.py
+    # savepath is given bei notebook
     def run(self, savepath=CONST.SAVE_PATH):
         # PHASE 1
         if MODE in ['default', 'preprocess']:
