@@ -104,21 +104,27 @@ Choose a directory inside a __Terminal__ (with `cd`, see below) and type `git cl
 ## Quick Description of each file
 
 ### main
-- __main.py__: <br>Entry point of the program and later run on command line for __Option 2__. It creates a Parser and runs it.
-- __parser.ipynb__: <br>Jupyter notebook, that acts as main file and displays the final result. (Only visible in Option 2)
+- __main.py__: <br>
+Entry point of the program and later run on command line for __Option 2__. It creates a Parser and runs it.
+- __parser.ipynb__: <br>
+Jupyter notebook, that acts as main file and displays the final result. (Only visible in Option 2)
 
 ### constants
-- __constants.json__: <br>Constants are defined here. The program load them while running. There are different modes configured.<br>
+- __constants.json__: <br>
+Constants are defined here. The program load them while running. There are different modes configured.<br>
 __Change values as necessary.__
-- __src/constants.py__: <br>Contains the path to __constants.json__ and the mode - it then loads all defined constants for that mode.<br>
+- __src/constants.py__: <br>
+Contains the path to __constants.json__ and the mode - it then loads all defined constants for that mode.<br>
 __Change mode as necessary.__ Change path if you moved __constants.json__.
 
 ### src
-- __src/parser.py__: <br>Does basic File-Path Handling and reads in and saves the (if wanted, accumulated) data.
-- __src/token.py__: <br>Heart of all Data Manipulation. Splits, converts, rearranges data as defined in __constants.json__.
+- __src/parser.py__: <br>
+Does basic File-Path Handling and reads in and saves the (if wanted, accumulated) data.
+- __src/token.py__: <br>
+Heart of all Data Manipulation. Splits, converts, rearranges data as defined in __constants.json__.
 
 ### setup
-- __requirements.txt__: <br>Used for setup with __pip__ to guarantee the correct version of __numpy__ and __pandas__. 
+- __requirements.txt__: Used for setup with __pip__ to guarantee the correct version of __numpy__ and __pandas__. 
 
 ### other
 - __README.md__: The documents that is displayed on [Github](https://github.com/Faydyn/psy_logparser/tree/master).
@@ -154,7 +160,8 @@ I tried to give self-explanatory names for these constants. If in doubt, don't c
    1. __preprocess__: <br>Converts data to a __csv__ for each file.
    2. __accumulate__: <br>Accumulates __csv__ files from above to one big __csv__. 
    3. __default__: <br>Combines both, __preprocess__ and __accumulate__, and does some optimization.
-7. Change __JSON_FILEPATH__. (Double backslashes!)<br> (Only, if you moved that file or want to use another config)
+7. Change __JSON_FILEPATH__. (Double backslashes!)<br>
+(Only, if you moved that file or want to use another config)
 
 <br>
 
