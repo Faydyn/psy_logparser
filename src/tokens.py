@@ -68,8 +68,8 @@ id: {self.id}
 
         # float_format -> all values have uniform decimal places (rounds, too)
         self.final_df.to_csv(final_savepath,
-                                   index=False,  # doesn't save index values
-                                   float_format=f'%.{CONST.DECIMAL_PLACES}f')
+                             index=False,  # doesn't save index values
+                             float_format=f'%.{CONST.DECIMAL_PLACES}f')
 
     # STATIC FUNCTIONS ################################################
     @staticmethod
