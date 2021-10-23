@@ -179,8 +179,8 @@ id: {self.id}
             # Count for RS and cast to float for following calculation
             # Mean for RT, with Ternary to fill 0 in case there are 0 elements
             n = len(filter_df[CONST.TARGET_RS])
-            self.final_df[rs] = float(n)
             self.final_df[rt] = filter_df[CONST.TARGET_RT].mean() if n else 0.0
+            self.final_df[rs] = float(n)
 
         # block and id stay identical
         self.final_df[CONST.TARGET_BLOCK] = self.block  # df["block"] = <block>
