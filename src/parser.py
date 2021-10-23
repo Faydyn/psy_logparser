@@ -62,8 +62,10 @@ class Parser:
     def lines_filepath(filepath):
         with open(filepath, 'r') as f:
             lines = []
-            while line := f.readline():  # runs as long as there are lines left
+            line = f.readline()  # get first line, if there is any
+            while line:  # runs as long as there are lines left
                 lines.append(line.strip())  # strip removes "\n" at end
+                line = f.readline()  # get next line
             return lines  # returns a list of all stripped lines
 
     # HELPER FUNCTIONS ################################################

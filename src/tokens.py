@@ -173,15 +173,14 @@ id: {self.id}
         # DO NOT assign a new variable "filter_df" inside set_value_final_df()!
         def set_value_final_df(sig_name):
             # "go_neu_no_hap_[hi/mi/fa/cr]_rt"/"go_neu_no_hap_[hi/mi/fa/cr]_rs"
-            colname_rt = f'{self.block}_{sig_name}_{CONST.TARGET_RT}'
-            colname_rs = f'{self.block}_{sig_name}_{CONST.TARGET_RS}'
+            rt = f'{self.block}_{sig_name}_{CONST.TARGET_RT}'
+            rs = f'{self.block}_{sig_name}_{CONST.TARGET_RS}'
 
             # Count for RS and cast to float for following calculation
-            # Sum/Count for RT, since mean doesn't return 0 on empty cols
-            self.final_df[colname_rs] = \
-                (rs := float(len(filter_df[CONST.TARGET_RS])))
-            self.final_df[colname_rt] = \
-                filter_df[CONST.TARGET_RT].sum() / rs if rs else 0.0
+            # Mean for RT, with Ternary to fill 0 in case there are 0 elements
+            n = len(filter_df[CONST.TARGET_RS])
+            self.final_df[rs] = float(n)
+            self.final_df[rt] = filter_df[CONST.TARGET_RT].mean() if n else 0.0
 
         # block and id stay identical
         self.final_df[CONST.TARGET_BLOCK] = self.block  # df["block"] = <block>
@@ -198,7 +197,8 @@ id: {self.id}
 
             # om = mi, co = fa
             # if sig is "mi"/"fa" it copies the values for "om"/"fa"
-            if nonsig := CONST.SIG_EQUIVALENT_NONSIG.get(sig):
+            nonsig = CONST.SIG_EQUIVALENT_NONSIG.get(sig)
+            if nonsig:
                 set_value_final_df(sig_name=nonsig)
 
         # Just add up the values of "om" and "fa" for RT and RS to get "er"
