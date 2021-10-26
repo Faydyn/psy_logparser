@@ -1,7 +1,7 @@
 /GoNoGo
 /examples
 /results
-*results.zip
+*.zip
 .DS_Store
 *.idea
 /.idea
