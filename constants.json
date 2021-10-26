@@ -114,7 +114,7 @@
 
     "accumulate" : {
         "DATA_PATH" : "",
-        "SAVE_PATH" : "results",
+        "SAVE_PATH" : "",
         "FILETYPE_IN" : "csv",
         "FILETYPE_OUT" : "csv",
         "FILENAME_ACCUM_DATA" : "accum_data",
