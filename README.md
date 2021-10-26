@@ -39,7 +39,7 @@ If you already installed __Python 3.9.7__ or higher, you can skip this part.
 1. Download __Python 3.9.7__ from the [Python Website](https://www.python.org/downloads/release/python-397/). Choose either __Windows installer (32-bit)__ or __Windows installer (64-bit, recommended)__.
 2. Run __python-3.9.7.exe__ as __Administrator__.
 3. Check "__Add Python 3.9 to PATH__". (Optional, but recommended)
-4. Choose "__Install Now__". ![Install Python 3 Windows](img/py_install_start_win.png)<br>
+4. Choose "__Install Now__". ![Install Python 3 Windows](img/py_install_start_win.png) <br>
 5. Wait for installation to complete.
 6. When done, __Disable Path Length Limit__. (If not already done - thus does not show up in picture).
 ![Finished Python 3 Install Windows](img/py_install_done_win.png)<br>
@@ -105,8 +105,8 @@ Choose a directory inside a __Terminal__ (with `cd`, see below) and type `git cl
 ## Quick Description of each file
 
 ### main
-- __main.py__: <br>
-Entry point of the program and later run on command line for __Option 2__. It creates a Parser and runs it.
+- __parser.ipynb__: <br>
+Jupyter notebook, that acts as main file (and more) and displays the final result.
 
 ### constants
 - __constants.json__: <br>

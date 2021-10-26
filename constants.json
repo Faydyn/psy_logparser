@@ -1,6 +1,6 @@
 {
     "default" : {
-        "DATA_PATH" : "GoNoGo",
+        "DATA_PATH" : "",
         "SAVE_PATH" : "results",
         "FILETYPE_IN" : "txt",
         "FILETYPE_OUT" : "csv",
@@ -57,7 +57,7 @@
     },
 
     "preprocess" : {
-        "DATA_PATH" : "GoNoGo",
+        "DATA_PATH" : "",
         "SAVE_PATH" : "results",
         "FILETYPE_IN" : "txt",
         "FILETYPE_OUT" : "csv",
@@ -113,7 +113,7 @@
     },
 
     "accumulate" : {
-        "DATA_PATH" : "results",
+        "DATA_PATH" : "",
         "SAVE_PATH" : "results",
         "FILETYPE_IN" : "csv",
         "FILETYPE_OUT" : "csv",
