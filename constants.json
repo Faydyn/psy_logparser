@@ -1,123 +1,147 @@
 {
-    "default" : {
+    "default": {
         "DATA_PATH" : "",
         "SAVE_PATH" : "results",
-        "FILETYPE_IN" : "txt",
-        "FILETYPE_OUT" : "csv",
-        "FILENAME_ACCUM_DATA" : "accum_data",
-        "DECIMAL_PLACES" : 3,
-
-        "TARGET_BLOCK" : "block",
-        "TARGET_ID" : "id",
-        "TARGET_TRIAL" : "trl",
-        "TARGET_PICTURE" : "pic",
-        "TARGET_RT" : "rt",
-        "TARGET_RS" : "rs",
-        "TARGET_PICTURENAME_REMOVE_FIRST" : 8,
-        "TARGET_PICTURENAME_REMOVE_LAST" : 4,
-        "TARGET_PICTURENAME_SPLIT_SEXNUM_AFTER" : 3,
-
-        "OLD_EMO_TO_TARGET" : {
-            "NEUTRAL" : "neu",
-            "HAPPY" : "hap",
-            "AFRAID" : "fea",
-            "ANGER" : "ang"
+        "FILETYPE_IN": "txt",
+        "FILETYPE_OUT": "csv",
+        "FILENAME_ACCUM_DATA": "accum_data",
+        "DECIMAL_PLACES": 3,
+        "TARGET_BLOCK": "block",
+        "TARGET_ID": "id",
+        "TARGET_TRIAL": "trl",
+        "TARGET_PICTURE": "pic",
+        "TARGET_RT": "rt",
+        "TARGET_RS": "rs",
+        "TARGET_PICTURENAME_REMOVE_FIRST": 8,
+        "TARGET_PICTURENAME_REMOVE_LAST": 4,
+        "TARGET_PICTURENAME_SPLIT_SEXNUM_AFTER": 3,
+        "OLD_EMO_TO_TARGET": {
+            "NEUTRAL": "neu",
+            "HAPPY": "hap",
+            "AFRAID": "fea",
+            "ANGER": "ang"
         },
-        "OLD_EMO_SHORT_TO_TARGET" : {
-            "nes" : "neu",
-            "has" : "hap",
-            "afs" : "fea",
-            "ans" : "ang"
+        "OLD_EMO_SHORT_TO_TARGET": {
+            "nes": "neu",
+            "has": "hap",
+            "afs": "fea",
+            "ans": "ang"
         },
-        "OLD_GONO_TO_TARGET" : {
-            "TGT" : "go",
-            "NTGT" : "no"
+        "OLD_GONO_TO_TARGET": {
+            "TGT": "go",
+            "NTGT": "no"
         },
-
-        "SIG_COLNAMES" : ["hi", "mi", "fa", "cr"],
-        "NONSIG_COLNAMES" : ["om", "co"],
-        "NONSIG_COMBINED" : "er",
-        "FINAL_COLNAMES" : ["hi", "mi", "fa", "cr", "er", "co", "om"],
-        "SIGNAL_TO_GONO" : {
-            "hi" : "go",
-            "mi" : "go",
-            "fa" : "no",
-            "cr" : "no"
+        "SIG_COLNAMES": [
+            "hi",
+            "mi",
+            "fa",
+            "cr"
+        ],
+        "NONSIG_COLNAMES": [
+            "om",
+            "co"
+        ],
+        "NONSIG_COMBINED": "er",
+        "FINAL_COLNAMES": [
+            "hi",
+            "mi",
+            "fa",
+            "cr",
+            "er",
+            "co",
+            "om"
+        ],
+        "SIGNAL_TO_GONO": {
+            "hi": "go",
+            "mi": "go",
+            "fa": "no",
+            "cr": "no"
         },
-        "SIGNAL_TO_RS_VALUE" : {
-            "hi" : 1,
-            "mi" : 0,
-            "fa" : 1,
-            "cr" : 0
+        "SIGNAL_TO_RS_VALUE": {
+            "hi": 1,
+            "mi": 0,
+            "fa": 1,
+            "cr": 0
         },
-        "SIG_EQUIVALENT_NONSIG" : {
+        "SIG_EQUIVALENT_NONSIG": {
             "mi": "om",
             "fa": "co"
         }
     },
-
-    "preprocess" : {
+    "preprocess": {
         "DATA_PATH" : "",
         "SAVE_PATH" : "results",
-        "FILETYPE_IN" : "txt",
-        "FILETYPE_OUT" : "csv",
-        "DECIMAL_PLACES" : 3,
-
-        "TARGET_BLOCK" : "block",
-        "TARGET_ID" : "id",
-        "TARGET_TRIAL" : "trl",
-        "TARGET_PICTURE" : "pic",
-        "TARGET_RT" : "rt",
-        "TARGET_RS" : "rs",
-        "TARGET_PICTURENAME_REMOVE_FIRST" : 8,
-        "TARGET_PICTURENAME_REMOVE_LAST" : 4,
-        "TARGET_PICTURENAME_SPLIT_SEXNUM_AFTER" : 3,
-
-        "OLD_EMO_TO_TARGET" : {
-            "NEUTRAL" : "neu",
-            "HAPPY" : "hap",
-            "AFRAID" : "fea",
-            "ANGER" : "ang"
+        "FILETYPE_IN": "txt",
+        "FILETYPE_OUT": "csv",
+        "DECIMAL_PLACES": 3,
+        "TARGET_BLOCK": "block",
+        "TARGET_ID": "id",
+        "TARGET_TRIAL": "trl",
+        "TARGET_PICTURE": "pic",
+        "TARGET_RT": "rt",
+        "TARGET_RS": "rs",
+        "TARGET_PICTURENAME_REMOVE_FIRST": 8,
+        "TARGET_PICTURENAME_REMOVE_LAST": 4,
+        "TARGET_PICTURENAME_SPLIT_SEXNUM_AFTER": 3,
+        "OLD_EMO_TO_TARGET": {
+            "NEUTRAL": "neu",
+            "HAPPY": "hap",
+            "AFRAID": "fea",
+            "ANGER": "ang"
         },
-        "OLD_EMO_SHORT_TO_TARGET" : {
-            "nes" : "neu",
-            "has" : "hap",
-            "afs" : "fea",
-            "ans" : "ang"
+        "OLD_EMO_SHORT_TO_TARGET": {
+            "nes": "neu",
+            "has": "hap",
+            "afs": "fea",
+            "ans": "ang"
         },
-        "OLD_GONO_TO_TARGET" : {
-            "TGT" : "go",
-            "NTGT" : "no"
+        "OLD_GONO_TO_TARGET": {
+            "TGT": "go",
+            "NTGT": "no"
         },
-
-        "SIG_COLNAMES" : ["hi", "mi", "fa", "cr"],
-        "NONSIG_COLNAMES" : ["om", "co"],
-        "NONSIG_COMBINED" : "er",
-        "FINAL_COLNAMES" : ["hi", "mi", "fa", "cr", "er", "co", "om"],
-        "SIGNAL_TO_GONO" : {
-            "hi" : "go",
-            "mi" : "go",
-            "fa" : "no",
-            "cr" : "no"
+        "SIG_COLNAMES": [
+            "hi",
+            "mi",
+            "fa",
+            "cr"
+        ],
+        "NONSIG_COLNAMES": [
+            "om",
+            "co"
+        ],
+        "NONSIG_COMBINED": "er",
+        "FINAL_COLNAMES": [
+            "hi",
+            "mi",
+            "fa",
+            "cr",
+            "er",
+            "co",
+            "om"
+        ],
+        "SIGNAL_TO_GONO": {
+            "hi": "go",
+            "mi": "go",
+            "fa": "no",
+            "cr": "no"
         },
-        "SIGNAL_TO_RS_VALUE" : {
-            "hi" : 1,
-            "mi" : 0,
-            "fa" : 1,
-            "cr" : 0
+        "SIGNAL_TO_RS_VALUE": {
+            "hi": 1,
+            "mi": 0,
+            "fa": 1,
+            "cr": 0
         },
-        "SIG_EQUIVALENT_NONSIG" : {
+        "SIG_EQUIVALENT_NONSIG": {
             "mi": "om",
             "fa": "co"
         }
     },
-
-    "accumulate" : {
+    "accumulate": {
         "DATA_PATH" : "",
         "SAVE_PATH" : "results",
-        "FILETYPE_IN" : "csv",
-        "FILETYPE_OUT" : "csv",
-        "FILENAME_ACCUM_DATA" : "accum_data",
-        "DECIMAL_PLACES" : 3
+        "FILETYPE_IN": "csv",
+        "FILETYPE_OUT": "csv",
+        "FILENAME_ACCUM_DATA": "accum_data",
+        "DECIMAL_PLACES": 3
     }
 }
