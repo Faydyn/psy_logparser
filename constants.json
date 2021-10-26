@@ -1,7 +1,7 @@
 {
     "default" : {
         "DATA_PATH" : "",
-        "SAVE_PATH" : "results",
+        "SAVE_PATH" : "",
         "FILETYPE_IN" : "txt",
         "FILETYPE_OUT" : "csv",
         "FILENAME_ACCUM_DATA" : "accum_data",
@@ -58,7 +58,7 @@
 
     "preprocess" : {
         "DATA_PATH" : "",
-        "SAVE_PATH" : "results",
+        "SAVE_PATH" : "",
         "FILETYPE_IN" : "txt",
         "FILETYPE_OUT" : "csv",
         "DECIMAL_PLACES" : 3,
