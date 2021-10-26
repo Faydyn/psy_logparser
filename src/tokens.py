@@ -176,11 +176,11 @@ id: {self.id}
             rt = f'{self.block}_{sig_name}_{CONST.TARGET_RT}'
             rs = f'{self.block}_{sig_name}_{CONST.TARGET_RS}'
 
-            # Count for RS and cast to float for following calculation
-            # Mean for RT, with Ternary to fill 0 in case there are 0 elements
-            n = len(filter_df[CONST.TARGET_RS])
-            self.final_df[rt] = filter_df[CONST.TARGET_RT].mean() if n else 0.0
-            self.final_df[rs] = float(n)
+            # Mean for RT, leaves empty for empty filter_df.
+            # If not empty!: Count for RS, cast to float for consistency
+            self.final_df[rt] = filter_df[CONST.TARGET_RT].mean()
+            count = len(filter_df[CONST.TARGET_RT])
+            self.final_df[rs] = float(count) if count else np.nan
 
         # block and id stay identical
         self.final_df[CONST.TARGET_BLOCK] = self.block  # df["block"] = <block>

@@ -1,14 +1,11 @@
 {
     "default" : {
-        "DATA_PATH" : "",
-        "SAVE_PATH" : "",
+        "DATA_PATH" : "GoNoGo",
+        "SAVE_PATH" : "results",
         "FILETYPE_IN" : "txt",
         "FILETYPE_OUT" : "csv",
         "FILENAME_ACCUM_DATA" : "accum_data",
-
-        "OLD_EMO" : ["NEUTRAL", "HAPPY", "AFRAID", "ANGER"],
-        "OLD_EMO_SHORT" : ["nes", "has", "afs", "ans"],
-        "OLD_GONO" : ["TGT", "NTGT"],
+        "DECIMAL_PLACES" : 3,
 
         "TARGET_BLOCK" : "block",
         "TARGET_ID" : "id",
@@ -16,9 +13,6 @@
         "TARGET_PICTURE" : "pic",
         "TARGET_RT" : "rt",
         "TARGET_RS" : "rs",
-        "TARGET_COLNAMES" : ["trl", "pic", "rt", "rs"],
-        "TARGET_EMO" : ["neu", "hap", "fea", "ang"],
-        "TARGET_GONO" : ["go", "no"],
         "TARGET_PICTURENAME_REMOVE_FIRST" : 8,
         "TARGET_PICTURENAME_REMOVE_LAST" : 4,
         "TARGET_PICTURENAME_SPLIT_SEXNUM_AFTER" : 3,
@@ -56,11 +50,6 @@
             "fa" : 1,
             "cr" : 0
         },
-        "RTRS_COLUMN_TO_FUNCTION" : {
-            "rt" : "MEAN",
-            "rs" : "COUNT"
-        },
-        "DECIMAL_PLACES" : 3,
         "SIG_EQUIVALENT_NONSIG" : {
             "mi": "om",
             "fa": "co"
@@ -68,14 +57,11 @@
     },
 
     "preprocess" : {
-        "DATA_PATH" : "",
-        "SAVE_PATH" : "",
+        "DATA_PATH" : "GoNoGo",
+        "SAVE_PATH" : "results",
         "FILETYPE_IN" : "txt",
         "FILETYPE_OUT" : "csv",
-
-        "OLD_EMO" : ["NEUTRAL", "HAPPY", "AFRAID", "ANGER"],
-        "OLD_EMO_SHORT" : ["nes", "has", "afs", "ans"],
-        "OLD_GONO" : ["TGT", "NTGT"],
+        "DECIMAL_PLACES" : 3,
 
         "TARGET_BLOCK" : "block",
         "TARGET_ID" : "id",
@@ -83,9 +69,6 @@
         "TARGET_PICTURE" : "pic",
         "TARGET_RT" : "rt",
         "TARGET_RS" : "rs",
-        "TARGET_COLNAMES" : ["trl", "pic", "rt", "rs"],
-        "TARGET_EMO" : ["neu", "hap", "fea", "ang"],
-        "TARGET_GONO" : ["go", "no"],
         "TARGET_PICTURENAME_REMOVE_FIRST" : 8,
         "TARGET_PICTURENAME_REMOVE_LAST" : 4,
         "TARGET_PICTURENAME_SPLIT_SEXNUM_AFTER" : 3,
@@ -123,11 +106,6 @@
             "fa" : 1,
             "cr" : 0
         },
-        "RTRS_COLUMN_TO_FUNCTION" : {
-            "rt" : "MEAN",
-            "rs" : "COUNT"
-        },
-        "DECIMAL_PLACES" : 3,
         "SIG_EQUIVALENT_NONSIG" : {
             "mi": "om",
             "fa": "co"
@@ -135,8 +113,8 @@
     },
 
     "accumulate" : {
-        "DATA_PATH" : "",
-        "SAVE_PATH" : "",
+        "DATA_PATH" : "results",
+        "SAVE_PATH" : "results",
         "FILETYPE_IN" : "csv",
         "FILETYPE_OUT" : "csv",
         "FILENAME_ACCUM_DATA" : "accum_data",
