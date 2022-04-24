@@ -1,7 +1,7 @@
 import os
 
 # Use double backslashes (\\) on windows as path separator
-DATAPATH = ''
+DATAPATH = '/Users/nilsseitz/Downloads/dmdx_parse'
 
 SUFFIX_DMDX = '.zil'  # dmdx file extension
 INIT_TEXT = 'Subject'  # must be unique to lines that get text appended later
