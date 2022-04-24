@@ -55,7 +55,7 @@ If you already installed __Python 3.9.7__ or higher, you can skip this part.
 5. Wait for installation to complete.
 6. When done, __Disable Path Length Limit__. (If not already done - thus does
    not show up in picture).
-   ![Finished Python 3 Install Windows](img/py_install_done_win.png) <br>
+   ![Finished Python 3 Install Windows](img/py_install_done_win.png)<br>
 7. Close the Installer and remove __python-3.9.7.exe__.
 
 ###### Testing Python 3
