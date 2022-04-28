@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
         with open(filepath, 'w') as f:
             changed = 0
-            for i, line in enumerate(lines):
+            for i, line in enumerate(lines, start=1):
                 if line.startswith(INIT_TEXT):  # Check unique init condition
                     if not line.endswith(f'{ADD_TEXT}\n'):  # Check if preparsed
                         print(f'Changed line {i} in file location: {filepath}')
